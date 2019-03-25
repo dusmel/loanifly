@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "lint": "node_modules/eslint/bin/eslint.js *.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/dusmel/loanifly/issues"
   },
-  "homepage": "https://github.com/dusmel/loanifly#readme"
+  "homepage": "https://github.com/dusmel/loanifly#readme",
+  "devDependencies": {
+    "eslint": "^5.15.3",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0"
+  }
 }
