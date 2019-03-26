@@ -10,8 +10,16 @@ router.get('/', (req, res) => {
   });
 });
 
-//users routes
-router.post('/api/v1/auth/signup', UserValidation.account, userController.signup);
-
+// users routes
+router.post(
+  '/api/v1/auth/signup',
+  UserValidation.signup,
+  userController.signup,
+);
+router.post(
+  '/api/v1/auth/signin',
+  UserValidation.signin,
+  userController.signin,
+);
 
 export default router;
