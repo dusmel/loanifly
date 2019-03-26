@@ -1,11 +1,8 @@
-import dotenv from "dotenv";
 import pg from "pg";
 
-dotenv.config();
-
 class DB {
-  constructor() {
-    this.pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+  constructor(url = process.env.DATABASE_URL) {
+    this.pool = new pg.Pool({ connectionString: url });
   }
 
   async runQuery(query, params = []) {
