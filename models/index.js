@@ -1,5 +1,7 @@
 import pg from "pg";
+import dotenv from 'dotenv'
 
+dotenv.config();
 class DB {
   constructor(url = process.env.DATABASE_URL) {
     this.pool = new pg.Pool({ connectionString: url });
