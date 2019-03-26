@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+node_modules
+.env
+=======
 # Logs
 logs
 *.log
@@ -82,3 +86,4 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+>>>>>>> 9b1372a32223efde69e6c60ccc8009f2c1da5ddf
