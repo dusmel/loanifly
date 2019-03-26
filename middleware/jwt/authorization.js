@@ -1,67 +1,88 @@
+import verifyToken from './authentification';
+
+// use as middlewares in routes which check authorization and authentification via verifyToken
 const authorizeAdmin = (req, res, next) => {
-  if (req.user.role === 'admin') {
+  const { authorization } = req.headers;
+  const token = authorization.split(' ')[1];
+  const user = verifyToken(token, res);
+  if (user.role === 'admin') {
     next();
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error: 'Forbidden',
-    });
+    return true;
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Forbidden',
+  });
 };
 
 const authorizeRequester = (req, res, next) => {
-  if (req.user.role === 'requester') {
+  const { authorization } = req.headers;
+  const token = authorization.split(' ')[1];
+  const user = verifyToken(token, res);
+  if (user.role === 'requester') {
     next();
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error: 'Forbidden',
-    });
+    return true;
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Forbidden',
+  });
 };
 
 const authorizeContributor = (req, res, next) => {
-  if (req.user.role === 'contributor') {
+  const { authorization } = req.headers;
+  const token = authorization.split(' ')[1];
+  const user = verifyToken(token, res);
+  if (user.role === 'contributor') {
     next();
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error: 'Forbidden',
-    });
+    return true;
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Forbidden',
+  });
 };
 
 const authorizeAdminAndRequester = (req, res, next) => {
-  if (req.user.role === 'admin' || req.user.role === 'requester') {
+  const { authorization } = req.headers;
+  const token = authorization.split(' ')[1];
+  const user = verifyToken(token, res);
+  if (user.role === 'admin' || user.role === 'requester') {
     next();
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error: 'Forbidden',
-    });
+    return true;
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Forbidden',
+  });
 };
 
 const authorizeAdminAndContributor = (req, res, next) => {
-  if (req.user.role === 'admin' || req.user.role === 'contributor') {
+  const { authorization } = req.headers;
+  const token = authorization.split(' ')[1];
+  const user = verifyToken(token, res);
+  if (user.role === 'admin' || user.role === 'contributor') {
     next();
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error: 'Forbidden',
-    });
+    return true;
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Forbidden',
+  });
 };
 
 const authorizeRequesterAndContributor = (req, res, next) => {
-  if (req.user.role === 'requester' || req.user.role === 'contributor') {
+  const { authorization } = req.headers;
+  const token = authorization.split(' ')[1];
+  const user = verifyToken(token, res);
+  if (user.role === 'requester' || user.role === 'contributor') {
     next();
-  } else {
-    return res.status(403).json({
-      status: 403,
-      error: 'Forbidden',
-    });
+    return true;
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Forbidden',
+  });
 };
 export default {
   authorizeAdmin,

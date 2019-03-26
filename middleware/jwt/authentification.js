@@ -3,14 +3,10 @@ import keys from './keys';
 
 const generateToken = payload => `bearer ${jwt.sign(payload, keys.secret, { expiresIn: '1h' })}`;
 
-// use as middleware in routes
-const verifyToken = (req, res, next) => {
+const verifyToken = (token, res) => {
   try {
-    const { Authorization } = req.headers;
-    const token = Authorization.split(' ')[1];
-    const decoded = jwt.verify(token, keys.secret);
-    req.user = decoded;
-    next();
+    const user = jwt.verify(token, keys.secret);
+    return user;
   } catch (error) {
     return res.status(401).json({
       status: 401,
