@@ -1,20 +1,36 @@
 import DB from "../models/index";
+import dotenv from "dotenv";
 
-const db = new DB();
+dotenv.config();
 
-const migrate = async () => {
+const migrate = async url => {
+  const database = url
+    .toString()
+    .split("/")
+    .slice(-1)
+    .pop();
+
+  const db = new DB(url);
+
   const users = await db.defineUser();
-  console.log(users.length === 0 ? "Table users created" : users.res);
+  console.log(
+    users.length === 0 ? `${database} : Table users created` : users.res
+  );
 
   const loans = await db.defineLoan();
-  console.log(loans.length === 0 ? "Table loans created" : loans.res);
+  console.log(
+    loans.length === 0 ? `${database} Table loans created` : loans.res
+  );
 
   const contributions = await db.defineContributions();
   console.log(
     contributions.length === 0
-      ? "Table contributions created"
+      ? `${database} Table contributions created`
       : contributions.res
   );
 };
 
-migrate();
+// Migrate the development database
+migrate(process.env.DATABASE_URL);
+// Migrate the testing database
+migrate(process.env.TEST_DATABASE);

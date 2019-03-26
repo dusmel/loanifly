@@ -1,11 +1,8 @@
-import dotenv from "dotenv";
 import pg from "pg";
 
-dotenv.config();
-
 class DB {
-  constructor() {
-    this.pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+  constructor(url = process.env.DATABASE_URL) {
+    this.pool = new pg.Pool({ connectionString: url });
   }
 
   async runQuery(query, params = []) {
@@ -47,8 +44,8 @@ class DB {
         amount int NOT NULL,
         status int,
         createdDate date DEFAULT NOW(),
-        grantedDate date DEFAULT NOW(),
-        paidDate date DEFAULT NOW());`;
+        grantedDate date ,
+        paidDate date );`;
 
     try {
       const response = await this.pool.query(query);
@@ -67,7 +64,7 @@ class DB {
         amount int NOT NULL,
         status int,
         createdDate date DEFAULT NOW(),
-        paidDate date DEFAULT NOW());`;
+        paidDate date);`;
 
     try {
       const response = await this.pool.query(query);
