@@ -44,8 +44,8 @@ class DB {
         amount int NOT NULL,
         status int,
         createdDate date DEFAULT NOW(),
-        grantedDate date DEFAULT NOW(),
-        paidDate date DEFAULT NOW());`;
+        grantedDate date ,
+        paidDate date );`;
 
     try {
       const response = await this.pool.query(query);
@@ -64,7 +64,7 @@ class DB {
         amount int NOT NULL,
         status int,
         createdDate date DEFAULT NOW(),
-        paidDate date DEFAULT NOW());`;
+        paidDate date);`;
 
     try {
       const response = await this.pool.query(query);
