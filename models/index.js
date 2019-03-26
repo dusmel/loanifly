@@ -1,37 +1,38 @@
 import dotenv from "dotenv";
-import { Pool } from "pg";
+import pg from "pg";
+
+dotenv.config();
 
 class DB {
   constructor() {
-    this.pool = new Pool();
-    this.client;
-    this.connect();
+    this.pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
   }
 
-  async connect() {
+  async runQuery(query, params = []) {
     try {
-      this.client = pool.connect(process.env.DATABASE_URL);
+      const response = await this.pool.query(query, params);
+      return {
+        response
+      };
     } catch (e) {
       return {
-        status: 500,
-        message: e
+        error: e
       };
     }
   }
 
   async defineUser() {
     const query = `
-        CREATE TYPE IF NOT EXISTS role AS ENUM (0, 1, 2);
         CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY NOT NULL ,
         name varchar(100) NOT NULL,
         email varchar(100) NOT NULL,
         password text NOT NULL,
-        role role,
-        date date DEFAULT NOW();`;
+        role int,
+        date date DEFAULT NOW());`;
 
     try {
-      const response = await this.client.query(query);
-      return response;
+      const response = await this.pool.query(query);
+      return response.rows;
     } catch (e) {
       return {
         status: 500,
@@ -42,17 +43,16 @@ class DB {
 
   async defineLoan() {
     const query = `
-        CREATE TYPE IF NOT EXISTS status AS ENUM (0, 1, 2, 3);
         CREATE TABLE IF NOT EXISTS loans (id SERIAL PRIMARY KEY NOT NULL ,
         amount int NOT NULL,
-        status status,
+        status int,
         createdDate date DEFAULT NOW(),
         grantedDate date DEFAULT NOW(),
-        paidDate date DEFAULT NOW();`;
+        paidDate date DEFAULT NOW());`;
 
     try {
-      const response = await this.client.query(query);
-      return response;
+      const response = await this.pool.query(query);
+      return response.rows;
     } catch (e) {
       return {
         status: 500,
@@ -63,16 +63,15 @@ class DB {
 
   async defineContributions() {
     const query = `
-        CREATE TYPE IF NOT EXISTS status AS ENUM (0, 1);
         CREATE TABLE IF NOT EXISTS contributions (id SERIAL PRIMARY KEY NOT NULL ,
         amount int NOT NULL,
-        status status,
+        status int,
         createdDate date DEFAULT NOW(),
-        paidDate date DEFAULT NOW();`;
+        paidDate date DEFAULT NOW());`;
 
     try {
-      const response = await this.client.query(query);
-      return response;
+      const response = await this.pool.query(query);
+      return response.rows;
     } catch (e) {
       return {
         status: 500,
