@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import keys from './keys';
 
-const generateToken = payload => `bearer ${jwt.sign(payload, keys.secret)}`;
+const generateToken = payload => `bearer ${jwt.sign(payload, keys.secret, { expiresIn: '1h' })}`;
 
 // use as middleware in routes
 const verifyToken = (req, res, next) => {
