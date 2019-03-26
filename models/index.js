@@ -1,11 +1,8 @@
-import dotenv from "dotenv";
 import pg from "pg";
 
-dotenv.config();
-
 class DB {
-  constructor() {
-    this.pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+  constructor(url = process.env.DATABASE_URL) {
+    this.pool = new pg.Pool({ connectionString: url });
   }
 
   async runQuery(query, params = []) {
@@ -32,7 +29,7 @@ class DB {
 
     try {
       const response = await this.pool.query(query);
-      return response;
+      return response.rows;
     } catch (e) {
       return {
         status: 500,
@@ -52,7 +49,7 @@ class DB {
 
     try {
       const response = await this.pool.query(query);
-      return response;
+      return response.rows;
     } catch (e) {
       return {
         status: 500,
@@ -71,7 +68,7 @@ class DB {
 
     try {
       const response = await this.pool.query(query);
-      return response;
+      return response.rows;
     } catch (e) {
       return {
         status: 500,
