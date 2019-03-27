@@ -44,7 +44,7 @@ class DB {
     const query = `
         CREATE TABLE IF NOT EXISTS loans (id SERIAL PRIMARY KEY NOT NULL ,
         amount int NOT NULL,
-        status int,
+        status int DEFAULT 0,
         owner int,
         createdDate date DEFAULT NOW(),
         grantedDate date DEFAULT null,
@@ -66,7 +66,7 @@ class DB {
     const query = `
         CREATE TABLE IF NOT EXISTS contributions (id SERIAL PRIMARY KEY NOT NULL ,
         amount int NOT NULL,
-        status int,
+        status int DEFAULT 0,
         owner int,
         createdDate date DEFAULT NOW(),
         paidDate date DEFAULT null,
