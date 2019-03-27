@@ -7,6 +7,9 @@ import userController from '../controllers/users';
 import contributionsValidations from '../middleware/validateContributions';
 import contributorController from '../controllers/contributors';
 
+import requestersValidations from '../middleware/validateRequester';
+import requesterController from '../controllers/requester';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -34,6 +37,14 @@ router.post(
   authorization.authorizeContributor,
   contributionsValidations.validateContribute,
   contributorController.contribute,
+);
+
+// Requesters routes
+router.post(
+  '/api/v1/loans',
+  authorization.authorizeRequester,
+  requestersValidations.create,
+  requesterController.requestLoan,
 );
 
 export default router;
