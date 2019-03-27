@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "migrate": "babel-node config/migrate.js --exit",
-    "test": "jest",
-    "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "coveralls": "jest --coverage --runInBand --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
     "lint": "npx eslint *.js",
     "build": "babel app.js --out-dir build",
     "start": "babel-watch app.js"
