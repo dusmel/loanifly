@@ -3,7 +3,7 @@ import Joi from "joi";
 const contributionsValidations = {
   validateContribute(req, res, next) {
     const schema = {
-      amount: Joi.number()
+      amount: Joi.number().required()
     };
     const result = Joi.validate(req.body, schema);
     if (result.error) {
