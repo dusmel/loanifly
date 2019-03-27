@@ -28,6 +28,13 @@ router.post(
   userController.signin
 );
 
+// Administrators routes
+router.get(
+  "/api/v1/users",
+  authorization.authorizeAdmin,
+  userController.viewUsers
+);
+
 // Contributors routes
 router.post(
   "/api/v1/contributions",
