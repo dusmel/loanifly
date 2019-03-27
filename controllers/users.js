@@ -37,7 +37,6 @@ const userController = {
     });
   },
   async viewUsers(req, res){
-    console.log(">>>>>>>>>>dfghjkldfghjdfghjkfghjkl>>>>");
     const users = await userModel.viewUsers();
     console.log(">>>>>>>>>", users);
     if (!users.status) {
