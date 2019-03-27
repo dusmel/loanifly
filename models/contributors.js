@@ -4,11 +4,11 @@ import queries from './queries/contributors';
 const db = new DB();
 
 const contributorsModel = {
-  async contribute(body) {
+  async contribute(body, user) {
     const { amount } = body;
-
+    const { id } = user;
     try {
-      const { response } = await db.runQuery(queries.contribute, [amount, 0]);
+      const { response } = await db.runQuery(queries.contribute, [amount, id]);
       return {
         status: true,
         data: response.rows,

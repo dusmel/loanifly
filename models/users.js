@@ -52,6 +52,22 @@ const userModel = {
       message: 'wrong credential',
     };
   },
+
+  async viewUsers(){
+    const {response} = await db.runQuery(queries.getUsers);
+    if(response.rowCount > 0){
+      return {
+        status: true,
+        data: response.rows,
+      }
+    } else{
+      return {
+        status: true,
+        message: 'no user found',
+      }
+    }
+  }
 };
+
 
 export default userModel;
