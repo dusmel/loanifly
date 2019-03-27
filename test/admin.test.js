@@ -1,3 +1,5 @@
+import auth from '../middleware/jwt/authentification';
+
 test('just trying', () => {
-  expect('1').toBe('1');
+  expect(auth).toBeDefined();
 });
