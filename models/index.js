@@ -23,7 +23,7 @@ class DB {
   async defineUser() {
     const query = `
         CREATE TABLE IF NOT EXISTS users (id SERIAL PRIMARY KEY NOT NULL ,
-        name varchar(100) NOT NULL,
+        name varchar(100) UNIQUE NOT NULL,
         email varchar(100) NOT NULL,
         password text NOT NULL,
         role int,
@@ -45,9 +45,11 @@ class DB {
         CREATE TABLE IF NOT EXISTS loans (id SERIAL PRIMARY KEY NOT NULL ,
         amount int NOT NULL,
         status int,
+        owner int,
         createdDate date DEFAULT NOW(),
-        grantedDate date ,
-        paidDate date );`;
+        grantedDate date DEFAULT null,
+        paidDate date DEFAULT null,
+        FOREIGN KEY (owner) REFERENCES users(id));`;
 
     try {
       const response = await this.pool.query(query);
@@ -65,8 +67,10 @@ class DB {
         CREATE TABLE IF NOT EXISTS contributions (id SERIAL PRIMARY KEY NOT NULL ,
         amount int NOT NULL,
         status int,
+        owner int,
         createdDate date DEFAULT NOW(),
-        paidDate date);`;
+        paidDate date DEFAULT null,
+        FOREIGN KEY (owner) REFERENCES users(id));`;
 
     try {
       const response = await this.pool.query(query);
