@@ -1,5 +1,6 @@
 import userModel from '../models/users';
 import token from '../middleware/jwt/authentification';
+import DB from '../models';
 
 const userController = {
   async signup(req, res) {
@@ -35,5 +36,20 @@ const userController = {
       token: newToken,
     });
   },
+  async viewUsers(req, res){
+    const users = await userModel.viewUsers();
+    console.log(">>>>>>>>>", users);
+    if (!users.status) {
+      return res.status(400).json({
+        status: 400,
+        message: users.message,
+      });
+    } else{
+      return res.status(200).json({
+        status: 200,
+        users: users.data,
+      });
+    }
+  }
 };
 export default userController;

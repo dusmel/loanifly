@@ -3,6 +3,7 @@ import authorization from '../middleware/jwt/authorization';
 
 import UserValidation from '../middleware/validateUser';
 import userController from '../controllers/users';
+import authorization from '../middleware/jwt/authorization';
 
 import contributionsValidations from '../middleware/validateContributions';
 import contributorController from '../controllers/contributors';
@@ -26,6 +27,11 @@ router.post(
   '/api/v1/auth/signin',
   UserValidation.signin,
   userController.signin,
+);
+router.get(
+  '/api/v1/users',
+  authorization.authorizeAdmin,
+  userController.viewUsers,
 );
 
 // Contributors routes
