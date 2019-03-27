@@ -1,90 +1,96 @@
-import verifyToken from './authentification';
+import verifyToken from "./authentification";
 
 const tokenHandler = (req, res) => {
   const { authorization } = req.headers;
   if (!authorization) {
-    return res.status(403).json({
-      status: 403,
-      error: 'Authorization missing',
-    });
+    return {
+      status: false,
+      message: "Authorization missing"
+    };
   }
-  const token = authorization.split(' ')[1];
+  const token = authorization.split(" ")[1];
   const user = verifyToken.verify(token, res);
-  req.user = user;
+  req.user = user.data;
   return user;
 };
 
 // use as middlewares in routes which check authorization and authentification via verifyToken
 const authorizeAdmin = (req, res, next) => {
   const user = tokenHandler(req, res);
-  if (user.role === 0) {
-    next();
-    return true;
+  if (!user.status) {
+    return res.status(403).json({
+      status: 403,
+      error: user.message
+    });
   }
-  return res.status(403).json({
-    status: 403,
-    error: 'Forbidden',
-  });
+  if (user.data.role === 0) {
+    next();
+  }
 };
 
 const authorizeRequester = (req, res, next) => {
   const user = tokenHandler(req, res);
-  if (user.role === 1) {
-    next();
-    return true;
+  if (!user.status) {
+    return res.status(403).json({
+      status: 403,
+      error: user.message
+    });
   }
-  return res.status(403).json({
-    status: 403,
-    error: 'Forbidden',
-  });
+  if (user.data.role === 1) {
+    next();
+  }
 };
 
 const authorizeContributor = (req, res, next) => {
   const user = tokenHandler(req, res);
-  if (user.role === 2) {
-    next();
-    return true;
+  if (!user.status) {
+    return res.status(403).json({
+      status: 403,
+      error: user.message
+    });
   }
-  return res.status(403).json({
-    status: 403,
-    error: 'Forbidden',
-  });
+  if (user.data.role === 2) {
+    next();
+  }
 };
 
 const authorizeAdminAndRequester = (req, res, next) => {
   const user = tokenHandler(req, res);
-  if (user.role === 0 || user.role === 1) {
-    next();
-    return true;
+  if (!user.status) {
+    return res.status(403).json({
+      status: 403,
+      error: user.message
+    });
   }
-  return res.status(403).json({
-    status: 403,
-    error: 'Forbidden',
-  });
+  if (user.data.role === 0 || user.data.role === 1) {
+    next();
+  }
 };
 
 const authorizeAdminAndContributor = (req, res, next) => {
   const user = tokenHandler(req, res);
-  if (user.role === 0 || user.role === 2) {
-    next();
-    return true;
+  if (!user.status) {
+    return res.status(403).json({
+      status: 403,
+      error: user.message
+    });
   }
-  return res.status(403).json({
-    status: 403,
-    error: 'Forbidden',
-  });
+  if (user.data.role === 0 || user.data.role === 2) {
+    next();
+  }
 };
 
 const authorizeRequesterAndContributor = (req, res, next) => {
   const user = tokenHandler(req, res);
-  if (user.role === 1 || user.role === 2) {
-    next();
-    return true;
+  if (!user.status) {
+    return res.status(403).json({
+      status: 403,
+      error: user.message
+    });
   }
-  return res.status(403).json({
-    status: 403,
-    error: 'Forbidden',
-  });
+  if (user.data.role === 1 || user.data.role === 2) {
+    next();
+  }
 };
 export default {
   authorizeAdmin,
@@ -92,5 +98,5 @@ export default {
   authorizeContributor,
   authorizeAdminAndRequester,
   authorizeAdminAndContributor,
-  authorizeRequesterAndContributor,
+  authorizeRequesterAndContributor
 };
