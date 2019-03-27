@@ -38,6 +38,12 @@ router.get(
   userController.viewUsers
 );
 
+router.get(
+  "/api/v1/user/:id",
+  authorization.authorizeAdmin,
+  userController.viewUser
+);
+
 // Contributors routes
 router.post(
   "/api/v1/contributions",
