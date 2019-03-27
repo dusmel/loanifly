@@ -1,5 +1,4 @@
 import requesterModel from '../models/requesters';
-import auth from '../middleware/jwt/authentification';
 
 const requesterController = {
   async requestLoan(req, res) {

@@ -20,7 +20,6 @@ const requesterModel = {
         '3',
         requesterId,
       ]);
-      console.log();
 
       if (!unpaidLoan.response.rowCount) {
         const { response } = await db.runQuery(queries.create, [
@@ -35,7 +34,7 @@ const requesterModel = {
       }
       return {
         status: false,
-        message: 'please, you have an unpaid loan request',
+        message: 'Oops, you still have an unpaid loan request',
       };
     } catch (e) {
       return {
