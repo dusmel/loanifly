@@ -16,18 +16,19 @@ const userModel = {
     const values = [name, email, password, role];
 
     try {
-      const { response } = await db.runQuery(queries.create, values);
-      return {
-        status: true,
-        data: response.rows,
-      };
-    } catch (error) {
-      if (error.routine === '_bt_check_unique') {
+      const result = await db.runQuery(queries.create, values);
+      if (result.error && result.error.routine === '_bt_check_unique') {
         return {
           status: false,
           message: 'User with that EMAIL already exist',
         };
       }
+
+      return {
+        status: true,
+        data: result.response.rows,
+      };
+    } catch (error) {
       return {
         status: false,
         message: error,

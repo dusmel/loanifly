@@ -10,6 +10,7 @@ const tokenHandler = (req, res) => {
   }
   const token = authorization.split(' ')[1];
   const user = verifyToken.verify(token, res);
+  req.user = user;
   return user;
 };
 
