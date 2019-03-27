@@ -1,11 +1,22 @@
 import verifyToken from './authentification';
 
+const tokenHandler = (req, res) => {
+  const { authorization } = req.headers;
+  if (!authorization) {
+    return res.status(403).json({
+      status: 403,
+      error: 'Authorization missing',
+    });
+  }
+  const token = authorization.split(' ')[1];
+  const user = verifyToken.verify(token, res);
+  return user;
+};
+
 // use as middlewares in routes which check authorization and authentification via verifyToken
 const authorizeAdmin = (req, res, next) => {
-  const { authorization } = req.headers;
-  const token = authorization.split(' ')[1];
-  const user = verifyToken(token, res);
-  if (user.role === 'admin') {
+  const user = tokenHandler(req, res);
+  if (user.role === 0) {
     next();
     return true;
   }
@@ -16,10 +27,8 @@ const authorizeAdmin = (req, res, next) => {
 };
 
 const authorizeRequester = (req, res, next) => {
-  const { authorization } = req.headers;
-  const token = authorization.split(' ')[1];
-  const user = verifyToken(token, res);
-  if (user.role === 'requester') {
+  const user = tokenHandler(req, res);
+  if (user.role === 1) {
     next();
     return true;
   }
@@ -30,10 +39,8 @@ const authorizeRequester = (req, res, next) => {
 };
 
 const authorizeContributor = (req, res, next) => {
-  const { authorization } = req.headers;
-  const token = authorization.split(' ')[1];
-  const user = verifyToken(token, res);
-  if (user.role === 'contributor') {
+  const user = tokenHandler(req, res);
+  if (user.role === 2) {
     next();
     return true;
   }
@@ -44,10 +51,8 @@ const authorizeContributor = (req, res, next) => {
 };
 
 const authorizeAdminAndRequester = (req, res, next) => {
-  const { authorization } = req.headers;
-  const token = authorization.split(' ')[1];
-  const user = verifyToken(token, res);
-  if (user.role === 'admin' || user.role === 'requester') {
+  const user = tokenHandler(req, res);
+  if (user.role === 0 || user.role === 1) {
     next();
     return true;
   }
@@ -58,10 +63,8 @@ const authorizeAdminAndRequester = (req, res, next) => {
 };
 
 const authorizeAdminAndContributor = (req, res, next) => {
-  const { authorization } = req.headers;
-  const token = authorization.split(' ')[1];
-  const user = verifyToken(token, res);
-  if (user.role === 'admin' || user.role === 'contributor') {
+  const user = tokenHandler(req, res);
+  if (user.role === 0 || user.role === 2) {
     next();
     return true;
   }
@@ -72,10 +75,8 @@ const authorizeAdminAndContributor = (req, res, next) => {
 };
 
 const authorizeRequesterAndContributor = (req, res, next) => {
-  const { authorization } = req.headers;
-  const token = authorization.split(' ')[1];
-  const user = verifyToken(token, res);
-  if (user.role === 'requester' || user.role === 'contributor') {
+  const user = tokenHandler(req, res);
+  if (user.role === 1 || user.role === 2) {
     next();
     return true;
   }
