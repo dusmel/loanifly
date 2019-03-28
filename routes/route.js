@@ -73,7 +73,7 @@ router.post(
 // Requesters routes
 router.get(
   '/api/v1/loans/:id',
-  authorization.authorizeRequester,
+  authorization.authorizeAdminAndRequester,
   requestersValidations.getOne,
   requesterController.getSingleRequest,
 );
