@@ -1,4 +1,5 @@
 import contributorsModel from "../models/contributors";
+
 const contributorController = {
   async contribute(req, res) {
     const response = await contributorsModel.contribute(req.body, req.user);

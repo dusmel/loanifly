@@ -66,7 +66,22 @@ const userModel = {
         message: 'no user found',
       }
     }
-  }
+  },
+
+  async viewUser(id){
+    const {response} = await db.runQuery(queries.getUser, [id]);
+    if(response.rowCount > 0){
+      return {
+        status: true,
+        data: response.rows,
+      }
+    } else{
+      return {
+        status: true,
+        message: 'the user not found',
+      }
+    }
+  },
 };
 
 

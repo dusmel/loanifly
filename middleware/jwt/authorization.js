@@ -1,15 +1,17 @@
-import verifyToken from "./authentification";
+import verifyToken from './authentification';
 
 const tokenHandler = (req, res) => {
   const { authorization } = req.headers;
   if (!authorization) {
     return {
       status: false,
-      message: "Authorization missing"
+      message: 'Authorization missing',
     };
   }
-  const token = authorization.split(" ")[1];
+  const token = authorization.split(' ')[1];
   const user = verifyToken.verify(token, res);
+  console.log(user);
+
   req.user = user.data;
   return user;
 };
@@ -20,12 +22,16 @@ const authorizeAdmin = (req, res, next) => {
   if (!user.status) {
     return res.status(403).json({
       status: 403,
-      error: user.message
+      error: user.message,
     });
   }
   if (user.data.role === 0) {
-    next();
+    return next();
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Non-authorised user',
+  });
 };
 
 const authorizeRequester = (req, res, next) => {
@@ -34,13 +40,17 @@ const authorizeRequester = (req, res, next) => {
   if (!user.status) {
     return res.status(403).json({
       status: 403,
-      error: user.message
+      error: user.message,
     });
   }
   console.log(user.data.role);
   if (user.data.role === 1) {
-    next();
+    return next();
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Non-authorised user',
+  });
 };
 
 const authorizeContributor = (req, res, next) => {
@@ -48,12 +58,16 @@ const authorizeContributor = (req, res, next) => {
   if (!user.status) {
     return res.status(403).json({
       status: 403,
-      error: user.message
+      error: user.message,
     });
   }
   if (user.data.role === 2) {
-    next();
+    return next();
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Non-authorised user',
+  });
 };
 
 const authorizeAdminAndRequester = (req, res, next) => {
@@ -61,12 +75,16 @@ const authorizeAdminAndRequester = (req, res, next) => {
   if (!user.status) {
     return res.status(403).json({
       status: 403,
-      error: user.message
+      error: user.message,
     });
   }
   if (user.data.role === 0 || user.data.role === 1) {
-    next();
+    return next();
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Non-authorised user',
+  });
 };
 
 const authorizeAdminAndContributor = (req, res, next) => {
@@ -74,12 +92,16 @@ const authorizeAdminAndContributor = (req, res, next) => {
   if (!user.status) {
     return res.status(403).json({
       status: 403,
-      error: user.message
+      error: user.message,
     });
   }
   if (user.data.role === 0 || user.data.role === 2) {
-    next();
+    return next();
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Non-authorised user',
+  });
 };
 
 const authorizeRequesterAndContributor = (req, res, next) => {
@@ -87,12 +109,16 @@ const authorizeRequesterAndContributor = (req, res, next) => {
   if (!user.status) {
     return res.status(403).json({
       status: 403,
-      error: user.message
+      error: user.message,
     });
   }
   if (user.data.role === 1 || user.data.role === 2) {
-    next();
+    return next();
   }
+  return res.status(403).json({
+    status: 403,
+    error: 'Non-authorised user',
+  });
 };
 export default {
   authorizeAdmin,
@@ -100,5 +126,5 @@ export default {
   authorizeContributor,
   authorizeAdminAndRequester,
   authorizeAdminAndContributor,
-  authorizeRequesterAndContributor
+  authorizeRequesterAndContributor,
 };
