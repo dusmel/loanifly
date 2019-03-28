@@ -20,8 +20,13 @@ const requesterController = {
 
   async getSingleRequest(req, res) {
     const loanId = req.params.id;
+    const { role } = req.user;
     const { id } = req.user;
-    const response = await requesterModel.getOneRequest(loanId, id);
+
+    // check whether the user role is admin or requester
+    const response =      role === 0
+        ? await requesterModel.getOneRequest(loanId, null)
+        : await requesterModel.getOneRequest(loanId, id);
 
     if (!response.status) {
       return res.status(500).json({
@@ -34,6 +39,15 @@ const requesterController = {
       status: 200,
       data: response.data,
     });
+  },
+
+  async cancelLoanRequest(req, res) {
+    const loanId = req.params.id;
+    const { id } = req.user;
+
+    const response = await requesterModel.getOneRequest(loanId, id);
+
+    console.log(response);
   },
 };
 export default requesterController;

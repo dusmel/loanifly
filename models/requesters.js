@@ -65,6 +65,29 @@ const requesterModel = {
       };
     }
   },
+
+  /**
+   * cancel a single loan request
+   *
+   * @author mutombo jean-vincent
+   * @param {string} loanId
+   * @param {string} requesterId
+   */
+  async cancelLoanRequest(loanId, requesterId) {
+    try {
+      const loan = await db.runQuery(queries.getOne, [loanId, requesterId]);
+      console.log('loan request', loan);
+      return {
+        status: true,
+        data: loan.response.rows,
+      };
+    } catch (e) {
+      return {
+        status: false,
+        message: e,
+      };
+    }
+  },
 };
 
 export default requesterModel;
