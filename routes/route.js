@@ -10,6 +10,9 @@ import contributorController from '../controllers/contributors';
 import requestersValidations from '../middleware/validateRequester';
 import requesterController from '../controllers/requester';
 
+import loansValidations from '../middleware/validateLoans';
+import loansController from '../controllers/loans';
+
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -38,10 +41,17 @@ router.get(
   userController.viewUsers,
 );
 
-router.get(
-  "/api/v1/user/:id",
+router.put(
+  '/api/v1/loans/:id',
   authorization.authorizeAdmin,
-  userController.viewUser
+  loansValidations.validateRejectGrant,
+  loansController.grantLoan,
+);
+
+router.get(
+  '/api/v1/user/:id',
+  authorization.authorizeAdmin,
+  userController.viewUser,
 );
 
 // Contributors routes
