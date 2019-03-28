@@ -1,5 +1,5 @@
-import DB from './index';
-import queries from './queries/contributors';
+import DB from "./index";
+import queries from "./queries/contributors";
 
 const db = new DB();
 
@@ -11,15 +11,31 @@ const contributorsModel = {
       const { response } = await db.runQuery(queries.contribute, [amount, id]);
       return {
         status: true,
-        data: response.rows,
+        data: response
       };
     } catch (e) {
       return {
         status: false,
-        message: e,
+        message: e
       };
     }
   },
+  async viewContributions(user) {
+    try {
+      const { response } = await db.runQuery(queries.getContrubutions, [
+        user.id
+      ]);
+      return {
+        status: true,
+        data: response
+      };
+    } catch (e) {
+      return {
+        status: false,
+        message: e
+      };
+    }
+  }
 };
 
 export default contributorsModel;
