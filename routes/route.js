@@ -49,9 +49,9 @@ router.put(
 );
 
 router.get(
-  "/api/v1/user/:id",
+  '/api/v1/user/:id',
   authorization.authorizeAdmin,
-  userController.viewUser
+  userController.viewUser,
 );
 
 // Contributors routes
@@ -68,6 +68,14 @@ router.post(
   authorization.authorizeRequester,
   requestersValidations.create,
   requesterController.requestLoan,
+);
+
+// Requesters routes
+router.get(
+  '/api/v1/loans/:id',
+  authorization.authorizeRequester,
+  requestersValidations.getOne,
+  requesterController.getSingleRequest,
 );
 
 export default router;
