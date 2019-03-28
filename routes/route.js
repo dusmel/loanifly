@@ -44,6 +44,12 @@ router.get(
   userController.viewUser
 );
 
+router.delete(
+  "/api/v1/user/:id",
+  authorization.authorizeAdmin,
+  userController.deleteUser
+);
+
 // Contributors routes
 router.post(
   "/api/v1/contributions",
