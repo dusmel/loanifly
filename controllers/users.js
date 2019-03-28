@@ -1,6 +1,5 @@
 import userModel from '../models/users';
 import token from '../middleware/jwt/authentification';
-import DB from '../models';
 
 const userController = {
   async signup(req, res) {
@@ -38,7 +37,6 @@ const userController = {
   },
   async viewUsers(req, res){
     const users = await userModel.viewUsers();
-    console.log(">>>>>>>>>", users);
     if (!users.status) {
       return res.status(400).json({
         status: 400,
@@ -48,6 +46,21 @@ const userController = {
       return res.status(200).json({
         status: 200,
         users: users.data,
+      });
+    }
+  },
+
+  async viewUser(req, res){
+    const user = await userModel.viewUser(req.params.id);
+    if (!user.status) {
+      return res.status(400).json({
+        status: 400,
+        message: user.message,
+      });
+    } else{
+      return res.status(200).json({
+        status: 200,
+        user: user.data,
       });
     }
   }
