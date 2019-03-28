@@ -7,8 +7,8 @@ import userController from "../controllers/users";
 import contributionsValidations from "../middleware/validateContributions";
 import contributorController from "../controllers/contributors";
 
-import requestersValidations from '../middleware/validateRequester';
-import requesterController from '../controllers/requester';
+import requestersValidations from "../middleware/validateRequester";
+import requesterController from "../controllers/requester";
 
 const router = express.Router();
 
@@ -46,12 +46,18 @@ router.post(
   contributorController.contribute
 );
 
+router.get(
+  "/api/v1/contributions",
+  authorization.authorizeContributor,
+  contributorController.viewContributions
+);
+
 // Requesters routes
 router.post(
-  '/api/v1/loans',
+  "/api/v1/loans",
   authorization.authorizeRequester,
   requestersValidations.create,
-  requesterController.requestLoan,
+  requesterController.requestLoan
 );
 
 export default router;
