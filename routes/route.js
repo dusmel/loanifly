@@ -109,6 +109,13 @@ router.get(
   requesterController.getSingleRequest,
 );
 
+router.put(
+  '/api/v1/loans',
+  authorization.authorizeRequester,
+  requestersValidations.validateUpdateLoan,
+  requesterController.updateLoan,
+);
+
 // Requester routes (DELETE)
 router.delete(
   '/api/v1/loans/',

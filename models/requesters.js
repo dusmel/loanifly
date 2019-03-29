@@ -97,6 +97,31 @@ const requesterModel = {
       };
     }
   },
+  /**
+   *
+   * @author Grace Lungu
+   * @param {number} amount
+   */
+  async updateLoan(amount, id) {
+    try {
+      const loan = await db.runQuery(queries.updateLoan, [amount, id]);
+      if (loan.rowCount === 0) {
+        return {
+          status: false,
+          message: 'The user does not have any pending loan',
+        };
+      }
+      return {
+        status: true,
+        data: loan.response.rows,
+      };
+    } catch (e) {
+      return {
+        status: false,
+        message: e,
+      };
+    }
+  },
 };
 
 export default requesterModel;

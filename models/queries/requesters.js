@@ -5,6 +5,8 @@ const requesterQueries = {
   getNonPaid:
     'SELECT * FROM loans WHERE status != $1 AND status != $2 AND owner = $3',
   delete: 'DELETE FROM loans WHERE status = 0 AND owner = $1',
+  updateLoan:
+    'UPDATE loans SET amount=$1 WHERE owner=$2 AND status=0 RETURNING *',
 };
 
 export default requesterQueries;
