@@ -1,4 +1,4 @@
-import contributorsModel from '../models/contributors';
+import contributorsModel from "../models/contributors";
 
 const contributorController = {
   async contribute(req, res) {
@@ -6,13 +6,13 @@ const contributorController = {
     if (!response.status) {
       return res.status(500).json({
         status: 500,
-        message: response.message,
+        message: response.message
       });
     }
 
     return res.status(200).json({
       status: 200,
-      data: response.data.rows,
+      data: response.data.rows
     });
   },
   async viewContributions(req, res) {
@@ -20,13 +20,26 @@ const contributorController = {
     if (!response.status) {
       return res.status(500).json({
         status: 500,
-        message: response.message,
+        message: response.message
       });
     }
 
     return res.status(200).json({
       status: 200,
-      data: response.data.rows,
+      data: response.data.rows
+    });
+  },
+  async viewTotalContributions(req, res) {
+    const response = await contributorsModel.viewContributions(req.user);
+
+    const contributions = response.data.rows;
+    let total = 0;
+    contributions.map(data => {
+      total += data.amount;
+    });
+    return res.status(200).json({
+      status: 200,
+      data: [{ total }]
     });
   },
   async payContribution(req, res) {
@@ -34,15 +47,15 @@ const contributorController = {
     if (!response.status) {
       return res.status(500).json({
         status: 500,
-        message: response.message,
+        message: response.message
       });
     }
 
     return res.status(200).json({
       status: 200,
-      data: response.data,
+      data: response.data
     });
-  },
+  }
 };
 
 export default contributorController;
