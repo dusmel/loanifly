@@ -23,9 +23,9 @@ const requesterController = {
     const { role, id } = req.user;
 
     // check whether the user role is admin or requester
-    const response = role === 0
-      ? await requesterModel.getOneRequest(loanId, null)
-      : await requesterModel.getOneRequest(loanId, id);
+    const response =      role === 0
+        ? await requesterModel.getOneRequest(loanId, null)
+        : await requesterModel.getOneRequest(loanId, id);
 
     if (!response.status) {
       return res.status(500).json({
