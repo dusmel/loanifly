@@ -81,7 +81,7 @@ const userModel = {
         message: 'the user not found',
       }
     }
-  },
+  }
 };
 
 

@@ -63,6 +63,6 @@ const userController = {
         user: user.data,
       });
     }
-  }
+  },
 };
 export default userController;

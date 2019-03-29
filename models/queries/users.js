@@ -4,6 +4,7 @@ const userQueries = {
   login: 'SELECT * FROM users where email = $1',
   getUsers: 'SELECT * FROM users',
   getUser: 'SELECT * FROM users where id = $1',
+
 };
 
 export default userQueries;

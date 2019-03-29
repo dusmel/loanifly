@@ -39,7 +39,7 @@ const requesterModel = {
     } catch (e) {
       return {
         status: false,
-        message: e,
+        message: 'message from catch...',
       };
     }
   },

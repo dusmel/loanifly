@@ -17,5 +17,20 @@ const loansController = {
       data: response.data,
     });
   },
+  async viewLoans(req, res){
+    const loans = await loansModel.viewLoans();
+    if (!loans.status) {
+      return res.status(400).json({
+        status: 400,
+        message: loans.message,
+      });
+    } else{
+      return res.status(200).json({
+        status: 200,
+        loans: loans.data,
+      });
+    }
+  },
+
 };
 export default loansController;
