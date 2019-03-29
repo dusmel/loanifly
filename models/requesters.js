@@ -1,6 +1,5 @@
 import DB from './index';
 import queries from './queries/requesters';
-import loansQueries from './queries/loans';
 
 const db = new DB();
 
@@ -52,14 +51,12 @@ const requesterModel = {
    * @param {string} loanId
    * @param {string} requesterId
    */
-  async getOneRequest(loanId, requesterId = null) {
+  async getOneRequest(loanId, requesterId) {
     try {
-      const loan = !requesterId
-        ? await db.runQuery(loansQueries.getById, [loanId])
-        : await db.runQuery(queries.getOne, [loanId, requesterId]);
+      const loan = await db.runQuery(queries.getOne, [loanId, requesterId]);
       return {
         status: true,
-        data: loan.response.rows,
+        data: loan.response.rows[0],
       };
     } catch (e) {
       return {
@@ -70,30 +67,33 @@ const requesterModel = {
   },
 
   /**
-   * pay the loan
+   * cancel a single loan request
    *
-   * @author Karl MUSINGO
-   * @param {int} requesterId
+   * @author mutombo jean-vincent
+   * @param {string} requesterId
    */
-  async payLoan(id) {
+  async cancelLoanRequest(requesterId) {
     try {
-      const { response } = await db.runQuery(queries.payLoan, [new Date(), id]);
+      const loan = await db.runQuery(queries.getPending, [requesterId]);
+      const loanResult = loan.response.rows[0];
 
-      if (response.rowCount === 0) {
+      if (!loanResult) {
         return {
           status: false,
-          message: 'the user does not have a loan which is granted',
+          notFound: true,
+          message: 'No pending loan request was found',
         };
       }
 
+      await db.runQuery(queries.delete, [requesterId]);
       return {
         status: true,
-        data: response.rows,
+        data: 'The loan requester was successfully deleted',
       };
-    } catch (error) {
+    } catch (e) {
       return {
         status: false,
-        message: error,
+        message: e,
       };
     }
   },

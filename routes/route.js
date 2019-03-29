@@ -99,7 +99,7 @@ router.get(
   contributorController.viewLoans,
 );
 
-// Requesters routes
+// Requester routes (POST)
 router.post(
   '/api/v1/loans',
   authorization.authorizeRequester,
@@ -107,6 +107,7 @@ router.post(
   requesterController.requestLoan,
 );
 
+// Requester routes (GET)
 router.get(
   '/api/v1/loans/:id',
   authorization.authorizeAdminAndRequester,
@@ -119,6 +120,13 @@ router.put(
   authorization.authorizeRequester,
   requestersValidations.validateUpdateLoan,
   requesterController.updateLoan,
+);
+
+// Requester routes (DELETE)
+router.delete(
+  '/api/v1/loans/',
+  authorization.authorizeRequester,
+  requesterController.cancelLoanRequest,
 );
 
 export default router;
