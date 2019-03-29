@@ -35,14 +35,12 @@ const authorizeAdmin = (req, res, next) => {
 
 const authorizeRequester = (req, res, next) => {
   const user = tokenHandler(req, res);
-  console.log(user);
   if (!user.status) {
     return res.status(403).json({
       status: 403,
       error: user.message,
     });
   }
-  console.log(user.data.role);
   if (user.data.role === 1) {
     return next();
   }
