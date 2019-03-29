@@ -28,6 +28,19 @@ const contributorController = {
       status: 200,
       data: response.data.rows
     });
+  },
+  async viewTotalContributions(req, res) {
+    const response = await contributorsModel.viewContributions(req.user);
+
+    const contributions = response.data.rows;
+    let total = 0;
+    contributions.map(data => {
+      total += data.amount;
+    });
+    return res.status(200).json({
+      status: 200,
+      data: [{ total }]
+    });
   }
 };
 
