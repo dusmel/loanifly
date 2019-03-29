@@ -86,7 +86,7 @@ const requesterModel = {
         };
       }
 
-      if (loanResult.status === 0) {
+      if (loanResult.status !== 0) {
         return {
           status: false,
           granted: true,
@@ -94,16 +94,11 @@ const requesterModel = {
         };
       }
 
-      // check whether the loan status is pending
-      // const cancel = loanStatus === 0;
-      // if (loanStatus === 0) {
-      //   const cancel = await db.runQuery(queries.delete, [loanId, requesterId]);
-      // }
+      await db.runQuery(queries.delete, [loanId, requesterId]);
 
-      console.log('loan :', loanResult);
       return {
         status: true,
-        data: loan.response.rows[0],
+        data: 'The loan requester was successfully deleted',
       };
     } catch (e) {
       return {
