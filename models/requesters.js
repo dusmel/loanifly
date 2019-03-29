@@ -1,5 +1,6 @@
 import DB from './index';
 import queries from './queries/requesters';
+import loansQueries from './queries/loans';
 
 const db = new DB();
 
@@ -51,9 +52,65 @@ const requesterModel = {
    * @param {string} loanId
    * @param {string} requesterId
    */
-  async getOneRequest(loanId, requesterId) {
+  async getOneRequest(loanId, requesterId = null) {
     try {
-      const loan = await db.runQuery(queries.getOne, [loanId, requesterId]);
+      const loan = !requesterId
+        ? await db.runQuery(loansQueries.getById, [loanId])
+        : await db.runQuery(queries.getOne, [loanId, requesterId]);
+      return {
+        status: true,
+        data: loan.response.rows,
+      };
+    } catch (e) {
+      return {
+        status: false,
+        message: e,
+      };
+    }
+  },
+
+  /**
+   * pay the loan
+   *
+   * @author Karl MUSINGO
+   * @param {int} requesterId
+   */
+  async payLoan(id) {
+    try {
+      const { response } = await db.runQuery(queries.payLoan, [new Date(), id]);
+
+      if (response.rowCount === 0) {
+        return {
+          status: false,
+          message: 'the user does not have a loan which is granted',
+        };
+      }
+
+      return {
+        status: true,
+        data: response.rows,
+      };
+    } catch (error) {
+      return {
+        status: false,
+        message: error,
+      };
+    }
+  },
+  /**
+   *
+   * @author Grace Lungu
+   * @param {number} amount
+   */
+  async updateLoan(amount, id) {
+    try {
+      const loan = await db.runQuery(queries.updateLoan, [amount, id]);
+      if (loan.rowCount === 0) {
+        return {
+          status: false,
+          message: 'The user does not have any pending loan',
+        };
+      }
       return {
         status: true,
         data: loan.response.rows,

@@ -64,5 +64,20 @@ const userController = {
       });
     }
   },
+
+  async deleteUser(req, res){
+    const user = await userModel.deleteUser(req.params.id);
+    if (!user.status) {
+      return res.status(400).json({
+        status: 400,
+        message: user.message,
+      });
+    } else{
+      return res.status(200).json({
+        status: 200,
+        message: "Successfully Deleted",
+      });
+    }
+  }
 };
 export default userController;

@@ -81,7 +81,34 @@ const userModel = {
         message: 'the user not found',
       }
     }
+<<<<<<< HEAD
   }
+=======
+  },
+  async deleteUser(id){
+    try {
+      const {response} = await db.runQuery(queries.deleteUser,[id]);
+      console.log(response);
+      if(response.rowCount > 0){
+        return {
+          status: true,
+          data: response.rows,
+        }
+      } else{
+        return {
+          status: false,
+          message: 'the user not found',
+        }
+      }
+    } catch (error) {
+      return {
+        status: false,
+        message: 'server error...',
+      }
+    }
+    
+  },
+>>>>>>> d71249a7e7b27ab4a3ef1deba2130847aae094dd
 };
 
 
