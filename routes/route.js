@@ -53,6 +53,18 @@ router.get(
   authorization.authorizeAdmin,
   userController.viewUser
 );
+router.put(
+  "/api/v1/contributions/:id/pay",
+  authorization.authorizeAdmin,
+  loansValidations.validateParams,
+  contributorController.payContribution
+);
+
+router.delete(
+  "/api/v1/user/:id",
+  authorization.authorizeAdmin,
+  userController.deleteUser
+);
 
 // Contributors routes
 router.post(
@@ -66,6 +78,13 @@ router.get(
   "/api/v1/contributions",
   authorization.authorizeContributor,
   contributorController.viewContributions
+);
+
+// Contributor and requester
+router.get(
+  "/api/v1/contributions/total",
+  authorization.authorizeRequesterAndContributor,
+  contributorController.viewTotalContributions
 );
 
 router.get(
