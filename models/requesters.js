@@ -1,5 +1,6 @@
 import DB from './index';
 import queries from './queries/requesters';
+import loansQueries from './queries/loans';
 
 const db = new DB();
 
@@ -51,9 +52,11 @@ const requesterModel = {
    * @param {string} loanId
    * @param {string} requesterId
    */
-  async getOneRequest(loanId, requesterId) {
+  async getOneRequest(loanId, requesterId = null) {
     try {
-      const loan = await db.runQuery(queries.getOne, [loanId, requesterId]);
+      const loan = !requesterId
+        ? await db.runQuery(loansQueries.getById, [loanId])
+        : await db.runQuery(queries.getOne, [loanId, requesterId]);
       return {
         status: true,
         data: loan.response.rows,
