@@ -44,6 +44,12 @@ const contributorController = {
   },
   async payContribution(req, res) {
     const response = await contributorsModel.payContribution(req.params.id);
+    if (!response.status) {
+      return res.status(500).json({
+        status: 500,
+        message: response.message
+      });
+    }
     return res.status(200).json({
       status: 200,
       data: response.data
