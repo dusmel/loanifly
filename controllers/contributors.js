@@ -72,15 +72,12 @@ const contributorController = {
   async viewAllContributions(req, res){
 
     const contributions = await contributorsModel.viewAllContributions();
-    console.log("before if", contributions);
     if (!contributions.status) {
       return res.status(400).json({
         status: 400,
         message: contributions.message,
       });
     } else{
-      console.log("Hey, I am the else!", contributions);
-      
       return res.status(200).json({
         status: 200,
         contributions: contributions,
