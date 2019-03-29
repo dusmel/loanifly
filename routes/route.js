@@ -111,9 +111,8 @@ router.get(
 
 // Requester routes (DELETE)
 router.delete(
-  '/api/v1/loans/:id',
+  '/api/v1/loans/',
   authorization.authorizeRequester,
-  requestersValidations.getOne,
   requesterController.cancelLoanRequest,
 );
 

@@ -42,10 +42,9 @@ const requesterController = {
   },
 
   async cancelLoanRequest(req, res) {
-    const loanId = req.params.id;
     const { id } = req.user;
 
-    const response = await requesterModel.cancelLoanRequest(loanId, id);
+    const response = await requesterModel.cancelLoanRequest(id);
     if (!response.status) {
       if (response.notFound) {
         return res.status(404).json({
@@ -53,12 +52,7 @@ const requesterController = {
           message: response.message,
         });
       }
-      if (response.granted) {
-        return res.status(403).json({
-          status: 403,
-          message: response.message,
-        });
-      }
+
       return res.status(500).json({
         status: 500,
         message: response.message,

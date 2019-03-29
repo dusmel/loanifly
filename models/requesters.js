@@ -70,32 +70,22 @@ const requesterModel = {
    * cancel a single loan request
    *
    * @author mutombo jean-vincent
-   * @param {string} loanId
    * @param {string} requesterId
    */
-  async cancelLoanRequest(loanId, requesterId) {
+  async cancelLoanRequest(requesterId) {
     try {
-      const loan = await db.runQuery(queries.getOne, [loanId, requesterId]);
+      const loan = await db.runQuery(queries.getPending, [requesterId]);
       const loanResult = loan.response.rows[0];
 
       if (!loanResult) {
         return {
           status: false,
           notFound: true,
-          message: 'No loan request found with this id',
+          message: 'No pending loan request was found',
         };
       }
 
-      if (loanResult.status !== 0) {
-        return {
-          status: false,
-          granted: true,
-          message: 'Cant cancel a granted or rejected loan request',
-        };
-      }
-
-      await db.runQuery(queries.delete, [loanId, requesterId]);
-
+      await db.runQuery(queries.delete, [requesterId]);
       return {
         status: true,
         data: 'The loan requester was successfully deleted',
