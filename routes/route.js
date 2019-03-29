@@ -77,6 +77,12 @@ router.get(
   loansController.viewLoans,
 );
 
+router.get(
+  '/api/v1/contributions',
+  authorization.authorizeAdmin,
+  contributorController.viewAllContributions
+);
+
 // Contributors routes
 router.post(
   '/api/v1/contributions',
