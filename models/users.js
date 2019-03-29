@@ -103,7 +103,8 @@ const userModel = {
         message: "server error..."
       };
     }
-  }
+    
+  },
 };
 
 export default userModel;

@@ -40,7 +40,6 @@ router.get(
   authorization.authorizeAdmin,
   userController.viewUsers
 );
-console.log(requesterController.payLoan);
 router.put(
   "/api/v1/loans/pay",
   authorization.authorizeRequester,
@@ -76,6 +75,12 @@ router.get(
   "/api/v1/loans",
   authorization.authorizeAdmin,
   loansController.viewLoans
+);
+
+router.get(
+  '/api/v1/contributions',
+  authorization.authorizeAdmin,
+  contributorController.viewAllContributions
 );
 
 // Contributors routes

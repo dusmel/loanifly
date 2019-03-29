@@ -80,7 +80,23 @@ const contributorsModel = {
         message: error
       };
     }
-  }
+  },
+  
+  async viewAllContributions(){
+    const {response} = await db.runQuery(queries.getAllContributions);
+    if(response.rowCount > 0){
+      return {
+        status: true,
+        Contributions: response.rows,
+      }
+    } else{
+      return {
+        status: true,
+        message: 'no contribution found',
+      }
+    }
+  },
+
 };
 
 export default contributorsModel;
