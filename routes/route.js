@@ -42,6 +42,12 @@ router.get(
 );
 
 router.put(
+  '/api/v1/loans/pay',
+  authorization.authorizeRequester,
+  requesterController.payLoan,
+);
+
+router.put(
   '/api/v1/loans/:id',
   authorization.authorizeAdmin,
   loansValidations.validateRejectGrant,

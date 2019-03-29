@@ -68,6 +68,35 @@ const requesterModel = {
       };
     }
   },
+
+  /**
+   * pay the loan
+   *
+   * @author Karl MUSINGO
+   * @param {int} requesterId
+   */
+  async payLoan(id) {
+    try {
+      const { response } = await db.runQuery(queries.payLoan, [new Date(), id]);
+
+      if (response.rowCount === 0) {
+        return {
+          status: false,
+          message: 'the user does not have a loan which is granted',
+        };
+      }
+
+      return {
+        status: true,
+        data: response.rows,
+      };
+    } catch (error) {
+      return {
+        status: false,
+        message: error,
+      };
+    }
+  },
 };
 
 export default requesterModel;
