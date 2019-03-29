@@ -1,5 +1,5 @@
-import DB from './index';
-import queries from './queries/contributors';
+import DB from "./index";
+import queries from "./queries/contributors";
 
 const db = new DB();
 
@@ -11,28 +11,42 @@ const contributorsModel = {
       const { response } = await db.runQuery(queries.contribute, [amount, id]);
       return {
         status: true,
-        data: response,
+        data: response
       };
     } catch (e) {
       return {
         status: false,
-        message: e,
+        message: e
       };
     }
   },
   async viewContributions(user) {
     try {
       const { response } = await db.runQuery(queries.getContrubutions, [
-        user.id,
+        user.id
       ]);
       return {
         status: true,
-        data: response,
+        data: response
       };
     } catch (e) {
       return {
         status: false,
-        message: e,
+        message: e
+      };
+    }
+  },
+  async viewLoans() {
+    try {
+      const { response } = await db.runQuery(queries.getLoans);
+      return {
+        status: true,
+        data: response
+      };
+    } catch (e) {
+      return {
+        status: false,
+        message: e
       };
     }
   },
@@ -42,28 +56,31 @@ const contributorsModel = {
       if (contribution.response.rows.length === 0) {
         return {
           status: false,
-          message: 'the contribution does not exist...',
+          message: "the contribution does not exist..."
         };
       }
       if (contribution.response.rows[0].status !== 0) {
         return {
           status: false,
-          message: 'The contribution has already been paid ...',
+          message: "The contribution has already been paid ..."
         };
       }
-      const { response } = await db.runQuery(queries.payContribution, [new Date(), id]);
+      const { response } = await db.runQuery(queries.payContribution, [
+        new Date(),
+        id
+      ]);
 
       return {
         status: true,
-        data: response.rows,
+        data: response.rows
       };
     } catch (error) {
       return {
         status: false,
-        message: error,
+        message: error
       };
     }
-  },
+  }
 };
 
 export default contributorsModel;

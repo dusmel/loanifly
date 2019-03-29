@@ -50,12 +50,26 @@ const contributorController = {
         message: response.message
       });
     }
-
     return res.status(200).json({
       status: 200,
       data: response.data
+    });
+  },
+  async viewLoans(req, res) {
+    const response = await contributorsModel.viewLoans();
+    const loans = response.data.rows;
+    let total = 0;
+    loans.map(loan => {
+      total += loan.amount;
+    });
+
+    return res.status(200).json({
+      status: 200,
+      data: [{ total }]
     });
   }
 };
 
 export default contributorController;
+
+//////////
