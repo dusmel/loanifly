@@ -71,5 +71,3 @@ const contributorController = {
 };
 
 export default contributorController;
-
-//////////
