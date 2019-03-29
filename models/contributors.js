@@ -87,11 +87,11 @@ const contributorsModel = {
     if(response.rowCount > 0){
       return {
         status: true,
-        Contributions: response.rows,
+        data: response.rows,
       }
     } else{
       return {
-        status: true,
+        status: false,
         message: 'no contribution found',
       }
     }

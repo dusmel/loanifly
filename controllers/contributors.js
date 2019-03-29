@@ -65,7 +65,7 @@ const contributorController = {
 
     return res.status(200).json({
       status: 200,
-      data: [{ total }]
+      data: [{ total }],
     });
   },
 
@@ -80,7 +80,7 @@ const contributorController = {
     } else{
       return res.status(200).json({
         status: 200,
-        contributions: contributions,
+        data: contributions,
       });
     }
   },
