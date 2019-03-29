@@ -39,6 +39,24 @@ const requesterController = {
       status: 200,
       data: response.data
     });
+  },
+  async updateLoan(req, res) {
+    const { amount } = req.body;
+    const { id } = req.user;
+
+    const response = await requesterModel.updateLoan(amount, id);
+
+    if (!response.status) {
+      return res.status(500).json({
+        status: 500,
+        message: response.message
+      });
+    }
+
+    return res.status(200).json({
+      status: 200,
+      data: response.data
+    });
   }
 };
 export default requesterController;

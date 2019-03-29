@@ -1,6 +1,6 @@
-import DB from './index';
-import queries from './queries/requesters';
-import loansQueries from './queries/loans';
+import DB from "./index";
+import queries from "./queries/requesters";
+import loansQueries from "./queries/loans";
 
 const db = new DB();
 
@@ -17,30 +17,30 @@ const requesterModel = {
     try {
       // check if the requester as a unpaid loan or a rejected loan
       const unpaidLoan = await db.runQuery(queries.getNonPaid, [
-        '2',
-        '3',
-        requesterId,
+        "2",
+        "3",
+        requesterId
       ]);
 
       if (!unpaidLoan.response.rowCount) {
         const { response } = await db.runQuery(queries.create, [
           amount,
-          requesterId,
+          requesterId
         ]);
 
         return {
           status: true,
-          data: response.rows,
+          data: response.rows
         };
       }
       return {
         status: false,
-        message: 'Oops, you still have an unpaid loan request',
+        message: "Oops, you still have an unpaid loan request"
       };
     } catch (e) {
       return {
         status: false,
-        message: e,
+        message: e
       };
     }
   },
@@ -59,15 +59,35 @@ const requesterModel = {
         : await db.runQuery(queries.getOne, [loanId, requesterId]);
       return {
         status: true,
-        data: loan.response.rows,
+        data: loan.response.rows
       };
     } catch (e) {
       return {
         status: false,
-        message: e,
+        message: e
       };
     }
   },
+  /**
+   * retrieve a single loan request
+   *
+   * @author Grace Lungu
+   * @param {number} amount
+   */
+  async updateLoan(amount, id) {
+    try {
+      const loan = await db.runQuery(queries.updateLoan, [amount, id]);
+      return {
+        status: true,
+        data: loan.response.rows
+      };
+    } catch (e) {
+      return {
+        status: false,
+        message: e
+      };
+    }
+  }
 };
 
 export default requesterModel;
