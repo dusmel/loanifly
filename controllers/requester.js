@@ -20,8 +20,7 @@ const requesterController = {
 
   async getSingleRequest(req, res) {
     const loanId = req.params.id;
-    const { role } = req.user;
-    const { id } = req.user;
+    const { role, id } = req.user;
 
     // check whether the user role is admin or requester
     const response =
