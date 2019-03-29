@@ -69,7 +69,6 @@ const requesterModel = {
     }
   },
   /**
-   * retrieve a single loan request
    *
    * @author Grace Lungu
    * @param {number} amount
@@ -77,6 +76,12 @@ const requesterModel = {
   async updateLoan(amount, id) {
     try {
       const loan = await db.runQuery(queries.updateLoan, [amount, id]);
+      if (loan.rowCount === 0) {
+        return {
+          status: false,
+          data: "The user does not have any loan"
+        };
+      }
       return {
         status: true,
         data: loan.response.rows
