@@ -79,7 +79,7 @@ const requesterModel = {
       if (loan.rowCount === 0) {
         return {
           status: false,
-          data: "The user does not have any loan"
+          data: "The user does not have any pending loan"
         };
       }
       return {
