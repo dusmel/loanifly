@@ -7,8 +7,8 @@ import userController from '../controllers/users';
 import contributionsValidations from '../middleware/validateContributions';
 import contributorController from '../controllers/contributors';
 
-import requestersValidations from "../middleware/validateRequester";
-import requesterController from "../controllers/requester";
+import requestersValidations from '../middleware/validateRequester';
+import requesterController from '../controllers/requester';
 
 import loansValidations from '../middleware/validateLoans';
 import loansController from '../controllers/loans';
@@ -63,25 +63,33 @@ router.post(
 );
 
 router.get(
-  "/api/v1/contributions",
+  '/api/v1/contributions',
   authorization.authorizeContributor,
-  contributorController.viewContributions
+  contributorController.viewContributions,
 );
 
-// Requesters routes
+// Requester routes (POST)
 router.post(
-  "/api/v1/loans",
+  '/api/v1/loans',
   authorization.authorizeRequester,
   requestersValidations.create,
-  requesterController.requestLoan
+  requesterController.requestLoan,
 );
 
-// Requesters routes
+// Requester routes (GET)
 router.get(
+  '/api/v1/loans/:id',
+  authorization.authorizeAdminAndRequester,
+  requestersValidations.getOne,
+  requesterController.getSingleRequest,
+);
+
+// Requester routes (DELETE)
+router.delete(
   '/api/v1/loans/:id',
   authorization.authorizeRequester,
   requestersValidations.getOne,
-  requesterController.getSingleRequest,
+  requesterController.cancelLoanRequest,
 );
 
 export default router;

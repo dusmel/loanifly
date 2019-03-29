@@ -56,7 +56,7 @@ const requesterModel = {
       const loan = await db.runQuery(queries.getOne, [loanId, requesterId]);
       return {
         status: true,
-        data: loan.response.rows,
+        data: loan.response.rows[0],
       };
     } catch (e) {
       return {
@@ -76,10 +76,34 @@ const requesterModel = {
   async cancelLoanRequest(loanId, requesterId) {
     try {
       const loan = await db.runQuery(queries.getOne, [loanId, requesterId]);
-      console.log('loan request', loan);
+      const loanResult = loan.response.rows[0];
+
+      if (!loanResult) {
+        return {
+          status: false,
+          notFound: true,
+          message: 'No loan request found with this id',
+        };
+      }
+
+      if (loanResult.status === 0) {
+        return {
+          status: false,
+          granted: true,
+          message: 'Cant cancel a granted or rejected loan request',
+        };
+      }
+
+      // check whether the loan status is pending
+      // const cancel = loanStatus === 0;
+      // if (loanStatus === 0) {
+      //   const cancel = await db.runQuery(queries.delete, [loanId, requesterId]);
+      // }
+
+      console.log('loan :', loanResult);
       return {
         status: true,
-        data: loan.response.rows,
+        data: loan.response.rows[0],
       };
     } catch (e) {
       return {
