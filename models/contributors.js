@@ -35,6 +35,20 @@ const contributorsModel = {
         message: e
       };
     }
+  },
+  async viewLoans() {
+    try {
+      const { response } = await db.runQuery(queries.getLoans);
+      return {
+        status: true,
+        data: response
+      };
+    } catch (e) {
+      return {
+        status: false,
+        message: e
+      };
+    }
   }
 };
 
