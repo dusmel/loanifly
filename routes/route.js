@@ -107,12 +107,18 @@ router.post(
   requesterController.requestLoan,
 );
 
-// Requesters routes
 router.get(
   '/api/v1/loans/:id',
   authorization.authorizeAdminAndRequester,
   requestersValidations.getOne,
   requesterController.getSingleRequest,
+);
+
+router.put(
+  '/api/v1/loans',
+  authorization.authorizeRequester,
+  requestersValidations.validateUpdateLoan,
+  requesterController.updateLoan,
 );
 
 export default router;
