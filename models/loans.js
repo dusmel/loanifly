@@ -31,12 +31,25 @@ const loansModel = {
         data: response.rows,
       };
     } catch (error) {
-      //   console.log(error);
-
       return {
         status: false,
         message: error,
       };
+    }
+  },
+
+  async viewLoans(){
+    const {response} = await db.runQuery(queries.getLoans);
+    if(response.rowCount > 0){
+      return {
+        status: true,
+        data: response.rows,
+      }
+    } else{
+      return {
+        status: true,
+        message: 'no loan found',
+      }
     }
   },
 };

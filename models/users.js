@@ -81,6 +81,9 @@ const userModel = {
         message: 'the user not found',
       }
     }
+<<<<<<< HEAD
+  }
+=======
   },
   async deleteUser(id){
     try {
@@ -105,6 +108,7 @@ const userModel = {
     }
     
   },
+>>>>>>> d71249a7e7b27ab4a3ef1deba2130847aae094dd
 };
 
 
