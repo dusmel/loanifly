@@ -35,3 +35,4 @@ const migrate = async (url) => {
 
 // Migrate the development database
 migrate(process.env.DATABASE_URL);
+migrate(process.env.TEST_DATABASE);
