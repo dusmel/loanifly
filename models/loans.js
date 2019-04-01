@@ -55,7 +55,6 @@ const loansModel = {
 
   async viewTotalPaidAmount(){
     const {response} = await db.runQuery(queries.getPaidAmount);
-    console.log(response);
     if(response.rowCount > 0){
       return {
         status: true,
