@@ -4,12 +4,6 @@ node_js:
   - 'stable'
 services:
   - postgresql
-env:
-  - DB_USERNAME=postgres
-  - DB_PASSWORD=1234
-  - DB_HOST=localhost
-  - DB_PORT=5432
-  - TEST_DATABASE=loanifly-test
 before_script:
   - psql -c ' CREATE DATABASE loanifly-test;' -U postgres;
 cache:
