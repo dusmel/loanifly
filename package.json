@@ -10,7 +10,7 @@
   },
   "scripts": {
     "migrate": "babel-node config/migrate.js",
-    "cleanDb": "NODE_ENV=testing babel-node test/config/cleanTables.js",
+    "cleanDb": "NODE_ENV=test babel-node test/config/cleanTables.js",
     "test": "NODE_ENV=test jest index.test.js --detectOpenHandles",
     "coveralls": "NODE_ENV=test npm run test --coverage  && cat ./coverage/lcov.info | coveralls",
     "lint": "npx eslint *.js",
