@@ -10,11 +10,13 @@ if (process.env.NODE_ENV === 'test') {
 class DB {
   constructor(url = dbUrl) {
     this.pool = new pg.Pool({ connectionString: url });
+    this.url = url;
   }
 
   async runQuery(query, params = []) {
     try {
       const response = await this.pool.query(query, params);
+
       return {
         response
       };

@@ -3,7 +3,7 @@ import DB from '../models/index';
 
 dotenv.config();
 
-const migrate = async (url) => {
+const migrate = async url => {
   const database = url
     .toString()
     .split('/')
@@ -14,19 +14,19 @@ const migrate = async (url) => {
 
   const users = await db.defineUser();
   console.log(
-    users.length === 0 ? `${database} : Table users created` : users.res,
+    users.length === 0 ? `${database} : Table users created` : users.res
   );
 
   const loans = await db.defineLoan();
   console.log(
-    loans.length === 0 ? `${database} Table loans created` : loans.res,
+    loans.length === 0 ? `${database} Table loans created` : loans.res
   );
 
   const contributions = await db.defineContributions();
   console.log(
     contributions.length === 0
       ? `${database} Table contributions created`
-      : contributions.res,
+      : contributions.res
   );
 
   db.pool.end();
@@ -34,3 +34,6 @@ const migrate = async (url) => {
 
 // Migrate the development database
 migrate(process.env.DATABASE_URL);
+
+// Migrate the development database
+migrate(process.env.TEST_DATABASE);

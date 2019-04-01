@@ -1,6 +1,8 @@
 import request from 'supertest';
 import app from '../app';
 
+import cleanDb from './config/cleanTables';
+
 const users = {
   admin: {
     email: 'admin.admin@andela.com',
@@ -53,5 +55,7 @@ beforeAll(async () => {
 describe('Example for getting the token', () => {
   test('Example', async () => console.log(tokens));
 });
+
+afterAll(async () => cleanDb());
 
 export default tokens;
