@@ -56,6 +56,6 @@ describe('Example for getting the token', () => {
   test('Example', async () => console.log(tokens));
 });
 
-afterAll(async () => cleanDb());
+afterAll(async () => await cleanDb());
 
 export default tokens;

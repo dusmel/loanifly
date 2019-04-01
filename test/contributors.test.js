@@ -51,6 +51,17 @@ describe('Contributor tests', () => {
   });
 
   describe('Get own contribution', () => {
+    test('Getting contributions', async () => {
+      await request(app)
+        .get('/api/v1/contributions')
+        .set('Authorization', tokens.contributor)
+        .then(res => {
+          console.log(res.body);
+          expect(res.body.status).toBe(200);
+          expect(res.body.data instanceof Array).toBe(true);
+        });
+    });
+
     test('Missing Authorization Header', async () => {
       await request(app)
         .get('/api/v1/contributions')
@@ -69,9 +80,29 @@ describe('Contributor tests', () => {
           expect(res.body.error).toBe('Authentification failed.');
         });
     });
+
+    test('Missing token', async () => {
+      await request(app)
+        .get('/api/v1/contributions')
+        .then(res => {
+          expect(res.body.status).toBe(403);
+          expect(res.body.error).toBe('Authorization missing');
+        });
+    });
   });
 
   describe('Get total contributions', () => {
+    test('Getting total', async () => {
+      await request(app)
+        .get('/api/v1/contributions/total')
+        .set('Authorization', tokens.contributor)
+        .then(res => {
+          console.log(res.body);
+          //expect(res.body.status).toBe(200);
+          //expect(res.body.data instanceof Array).toBe(true);
+        });
+    });
+
     test('Missing Authorization Header', async () => {
       await request(app)
         .get('/api/v1/contributions/total')
@@ -114,4 +145,4 @@ describe('Contributor tests', () => {
   });
 });
 
-afterAll(async () => cleanDb());
+afterAll(async () => await cleanDb());

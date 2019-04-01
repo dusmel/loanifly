@@ -5,4 +5,4 @@ test('just trying', () => {
   expect(auth).toBeDefined();
 });
 
-afterAll(async () => cleanDb());
+afterAll(async () => await cleanDb());
