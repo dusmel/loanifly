@@ -3,6 +3,10 @@ import app from '../app';
 
 import cleanDb from './config/cleanTables';
 
+import testAdmin from './admin.test';
+import testContributor from './contributors.test';
+import testRequester from './requester.test';
+
 const users = {
   admin: {
     email: 'admin.admin@andela.com',
@@ -28,8 +32,6 @@ beforeAll(async () => {
     .post('/api/v1/auth/signup')
     .send(users.admin)
     .then(res => {
-      console.log(res.body);
-      expect(res.body.status).toBe(200);
       tokens.admin = res.body.token;
     });
 
@@ -37,8 +39,6 @@ beforeAll(async () => {
     .post('/api/v1/auth/signup')
     .send(users.requester)
     .then(res => {
-      console.log(res.body);
-      expect(res.body.status).toBe(200);
       tokens.requester = res.body.token;
     });
 
@@ -46,16 +46,21 @@ beforeAll(async () => {
     .post('/api/v1/auth/signup')
     .send(users.contributor)
     .then(res => {
-      console.log(res.body);
-      expect(res.body.status).toBe(200);
       tokens.contributor = res.body.token;
     });
 });
 
-describe('Example for getting the token', () => {
-  test('Example', async () => console.log(tokens));
+testAdmin(tokens, {
+  email: users.admin.email,
+  password: users.admin.password
+});
+testContributor(tokens, {
+  email: users.contributor.email,
+  password: users.contributor.password
+});
+testRequester(tokens, {
+  email: users.requester.email,
+  password: users.requester.password
 });
 
-afterAll(async () => await cleanDb());
-
-export default tokens;
+afterAll(async () => cleanDb());

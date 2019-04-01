@@ -34,6 +34,19 @@ router.post(
   userController.signin
 );
 
+// Contributor and requester
+router.get(
+  '/api/v1/contributions/total',
+  authorization.authorizeRequesterAndContributor,
+  contributorController.viewTotalContributions
+);
+
+router.get(
+  '/api/v1/loans/total',
+  authorization.authorizeContributor,
+  contributorController.viewLoans
+);
+
 // Administrators routes
 router.get(
   '/api/v1/users',
@@ -109,19 +122,6 @@ router.get(
   '/api/v1/contributions',
   authorization.authorizeContributor,
   contributorController.viewContributions
-);
-
-// Contributor and requester
-router.get(
-  '/api/v1/contributions/total',
-  authorization.authorizeRequesterAndContributor,
-  contributorController.viewTotalContributions
-);
-
-router.get(
-  '/api/v1/loans/total',
-  authorization.authorizeContributor,
-  contributorController.viewLoans
 );
 
 // Requester routes (POST)
