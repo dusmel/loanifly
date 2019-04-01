@@ -85,6 +85,21 @@ const contributorController = {
     }
   },
 
+  async viewContribution(req, res){
+    const contribution = await contributorsModel.viewContribution(req.params.id);
+    if (!contribution.status) {
+      return res.status(400).json({
+        status: 400,
+        message: contribution.message,
+      });
+    } else{
+      return res.status(200).json({
+        status: 200,
+        data: contribution,
+      });
+    }
+  },
+
 };
 
 export default contributorController;
