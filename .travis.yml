@@ -11,7 +11,7 @@ env:
   - DB_PORT=5432
   - TEST_DATABASE=loanifly-test
 before_script:
-  - psql -c ' CREATE DATABASE loanifly-test;' -U postgre;
+  - psql -c ' CREATE DATABASE loanifly-test;' -U postgres;
 cache:
   directories:
     - node_modules
