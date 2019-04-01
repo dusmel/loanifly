@@ -58,6 +58,7 @@ router.get(
   authorization.authorizeAdmin,
   userController.viewUser,
 );
+
 router.put(
   '/api/v1/contributions/:id/pay',
   authorization.authorizeAdmin,
@@ -81,6 +82,13 @@ router.get(
   '/api/v1/contributions',
   authorization.authorizeAdmin,
   contributorController.viewAllContributions
+);
+
+router.get(
+  '/api/v1/contributions/:id',
+  authorization.authorizeAdmin,
+  loansValidations.validateParams,
+  contributorController.viewContribution,
 );
 
 // Contributors routes
