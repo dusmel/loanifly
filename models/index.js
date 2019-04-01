@@ -1,9 +1,14 @@
-import pg from "pg";
-import dotenv from "dotenv";
+import pg from 'pg';
+import dotenv from 'dotenv';
 
 dotenv.config();
+let dbUrl = process.env.DATABASE_URL;
+if (process.env.NODE_ENV === 'test') {
+  dbUrl = process.env.TEST_DATABASE;
+}
+
 class DB {
-  constructor(url = process.env.DATABASE_URL) {
+  constructor(url = dbUrl) {
     this.pool = new pg.Pool({ connectionString: url });
   }
 
@@ -11,11 +16,11 @@ class DB {
     try {
       const response = await this.pool.query(query, params);
       return {
-        response
+        response,
       };
     } catch (e) {
       return {
-        error: e
+        error: e,
       };
     }
   }
@@ -35,7 +40,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e
+        res: e,
       };
     }
   }
@@ -57,7 +62,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e
+        res: e,
       };
     }
   }
@@ -78,7 +83,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e
+        res: e,
       };
     }
   }
