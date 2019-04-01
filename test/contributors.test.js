@@ -3,6 +3,8 @@ import app from '../app';
 
 import request from 'supertest';
 
+import cleanDb from './config/cleanTables';
+
 describe('Contributor tests', () => {
   describe('Place contribution', () => {
     test('Wrong token', async () => {
@@ -80,3 +82,5 @@ describe('Contributor tests', () => {
     });
   });
 });
+
+afterAll(async () => cleanDb());
