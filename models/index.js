@@ -2,7 +2,6 @@ import pg from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
 const dbUrl = process.env.NODE_ENV === 'test'
   ? process.env.TEST_DATABASE
   : process.env.DATABASE_URL;
@@ -10,7 +9,6 @@ const dbUrl = process.env.NODE_ENV === 'test'
 class DB {
   constructor(url = dbUrl) {
     this.pool = new pg.Pool({ connectionString: url });
-    console.log('url', url);
   }
 
   async runQuery(query, params = []) {

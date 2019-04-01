@@ -38,6 +38,7 @@ const userModel = {
   async login(body) {
     const { email, password } = body;
     const { response } = await db.runQuery(queries.login, [email]);
+    console.log(response);
     if (response.rowCount > 0) {
       const result = bcrypt.compareSync(password, response.rows[0].password);
       if (result) {

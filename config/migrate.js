@@ -4,6 +4,7 @@ import DB from '../models/index';
 dotenv.config();
 
 const migrate = async (url) => {
+  console.log(url);
   const database = url
     .toString()
     .split('/')

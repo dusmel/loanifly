@@ -5,8 +5,7 @@ node_js:
 services:
   - postgresql
 before_script:
-  - psql -c ' CREATE DATABASE loanifly_test;' -U postgres;
-  - npm run migrate
+  - psql -c 'CREATE DATABASE loanifly_test;' -U postgres;
 cache:
   directories:
     - node_modules
