@@ -6,6 +6,7 @@ services:
   - postgresql
 before_script:
   - psql -c ' CREATE DATABASE loanifly_test;' -U postgres;
+  - npm run migrate
 cache:
   directories:
     - node_modules
