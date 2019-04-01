@@ -32,5 +32,20 @@ const loansController = {
     }
   },
 
+  async viewTotalPaidAmount(req, res){
+    const amount = await loansModel.viewTotalPaidAmount();
+    if (!amount.status) {
+      return res.status(400).json({
+        status: 400,
+        message: amount.message,
+      });
+    } else{
+      return res.status(200).json({
+        status: 200,
+        amount: amount.data,
+      });
+    }
+  },
+
 };
 export default loansController;

@@ -85,6 +85,12 @@ router.get(
 );
 
 router.get(
+  '/api/v1/loans/paid',
+  authorization.authorizeAdmin,
+  loansController.viewTotalPaidAmount,
+);
+
+router.get(
   '/api/v1/contributions/:id',
   authorization.authorizeAdmin,
   loansValidations.validateParams,
