@@ -3,9 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const dbUrl = process.env.NODE_ENV
-  ? process.env.DATABASE_URL
-  : process.env.TEST_DATABASE;
+const dbUrl = process.env.NODE_ENV === 'test'
+  ? process.env.TEST_DATABASE
+  : process.env.DATABASE_URL;
 
 class DB {
   constructor(url = dbUrl) {
