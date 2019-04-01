@@ -83,6 +83,13 @@ router.get(
   contributorController.viewAllContributions
 );
 
+router.get(
+  '/api/v1/loans/paid',
+  authorization.authorizeAdmin,
+  loansController.viewTotalPaidAmount,
+);
+
+
 // Contributors routes
 router.post(
   '/api/v1/contributions',
