@@ -1,5 +1,20 @@
-import tokens from './users.test';
+import request from 'supertest';
+import app from '../app';
 
-describe('Example for getting the token', () => {
-  test('Example', async () => console.log(tokens));
-});
+const testContributor = (tokens, credentials) => {
+  describe('Should login the contributor', () => {
+    test('signin', async () => {
+      await request(app)
+        .post('/api/v1/auth/signin')
+        .send({
+          email: credentials.email,
+          password: credentials.password,
+        })
+        .then((res) => {
+          expect(res.body.status).toBe(200);
+        });
+    });
+  });
+};
+
+export default testContributor;
