@@ -5,11 +5,13 @@ node_js:
 services:
   - postgresql
 before_script:
-  - psql -c ' CREATE DATABASE loanifly-test;' -U postgres;
+  - psql -c ' CREATE DATABASE loanifly_test;' -U postgres;
   - npm run migrate
 cache:
   directories:
     - node_modules
-script: npm run test
+script:
+  - npm run migrate
+  - npm run test
 after_success:
   - npm run coveralls
