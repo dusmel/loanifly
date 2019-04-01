@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import DB from "./index";
-import queries from "./queries/users";
+import bcrypt from 'bcrypt';
+import DB from './index';
+import queries from './queries/users';
 
 const db = new DB();
 
@@ -10,28 +10,28 @@ const userModel = {
     let { password } = body;
     password = await bcrypt.hash(password, bcrypt.genSaltSync(8));
     const name = email
-      .split("@")[0]
-      .split(".")
-      .join(" ");
+      .split('@')[0]
+      .split('.')
+      .join(' ');
     const values = [name, email, password, role];
 
     try {
       const result = await db.runQuery(queries.create, values);
-      if (result.error && result.error.routine === "_bt_check_unique") {
+      if (result.error && result.error.routine === '_bt_check_unique') {
         return {
           status: false,
-          message: "User with that EMAIL already exist"
+          message: 'User with that EMAIL already exist',
         };
       }
 
       return {
         status: true,
-        data: result.response.rows
+        data: result.response.rows,
       };
     } catch (error) {
       return {
         status: false,
-        message: error
+        message: error,
       };
     }
   },
@@ -43,13 +43,13 @@ const userModel = {
       if (result) {
         return {
           status: true,
-          data: response.rows
+          data: response.rows,
         };
       }
     }
     return {
       status: false,
-      message: "wrong credential"
+      message: 'wrong credential',
     };
   },
 
@@ -58,14 +58,13 @@ const userModel = {
     if (response.rowCount > 0) {
       return {
         status: true,
-        data: response.rows
-      };
-    } else {
-      return {
-        status: true,
-        message: "no user found"
+        data: response.rows,
       };
     }
+    return {
+      status: false,
+      message: 'no user found',
+    };
   },
 
   async viewUser(id) {
@@ -73,37 +72,33 @@ const userModel = {
     if (response.rowCount > 0) {
       return {
         status: true,
-        data: response.rows
-      };
-    } else {
-      return {
-        status: true,
-        message: "the user not found"
+        data: response.rows,
       };
     }
+    return {
+      status: false,
+      message: 'the user not found',
+    };
   },
   async deleteUser(id) {
     try {
       const { response } = await db.runQuery(queries.deleteUser, [id]);
-      console.log(response);
       if (response.rowCount > 0) {
         return {
           status: true,
-          data: response.rows
-        };
-      } else {
-        return {
-          status: false,
-          message: "the user not found"
+          data: response.rows,
         };
       }
+      return {
+        status: false,
+        message: 'the user not found',
+      };
     } catch (error) {
       return {
         status: false,
-        message: "server error..."
+        message: 'server error...',
       };
     }
-    
   },
 };
 
