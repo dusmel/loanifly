@@ -28,6 +28,7 @@ beforeAll(async () => {
     .post('/api/v1/auth/signup')
     .send(users.admin)
     .then(res => {
+      console.log(res.body);
       expect(res.body.status).toBe(200);
       tokens.admin = res.body.token;
     });
@@ -36,6 +37,7 @@ beforeAll(async () => {
     .post('/api/v1/auth/signup')
     .send(users.requester)
     .then(res => {
+      console.log(res.body);
       expect(res.body.status).toBe(200);
       tokens.requester = res.body.token;
     });
@@ -44,6 +46,7 @@ beforeAll(async () => {
     .post('/api/v1/auth/signup')
     .send(users.contributor)
     .then(res => {
+      console.log(res.body);
       expect(res.body.status).toBe(200);
       tokens.contributor = res.body.token;
     });
