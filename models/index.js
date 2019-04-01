@@ -16,11 +16,11 @@ class DB {
     try {
       const response = await this.pool.query(query, params);
       return {
-        response,
+        response
       };
     } catch (e) {
       return {
-        error: e,
+        error: e
       };
     }
   }
@@ -40,7 +40,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e,
+        res: e
       };
     }
   }
@@ -62,7 +62,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e,
+        res: e
       };
     }
   }
@@ -83,7 +83,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e,
+        res: e
       };
     }
   }

@@ -1,9 +1,9 @@
-import jwt from "jsonwebtoken";
-import keys from "./keys";
+import jwt from 'jsonwebtoken';
+import keys from './keys';
 
 const token = {
   generate(payload) {
-    return `bearer ${jwt.sign(payload, keys.secret, { expiresIn: "1h" })}`;
+    return `bearer ${jwt.sign(payload, keys.secret, { expiresIn: '1h' })}`;
   },
   verify(userToken, res) {
     try {
@@ -15,7 +15,7 @@ const token = {
     } catch (error) {
       return {
         status: false,
-        message: "Authentification failed."
+        message: 'Authentification failed.'
       };
     }
   }
