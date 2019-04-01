@@ -97,6 +97,22 @@ const contributorsModel = {
     }
   },
 
+  async viewContribution(id) {
+    const { response } = await db.runQuery(queries.getContrubutionById, [id]);
+    if (response.rowCount > 0) {
+      return {
+        status: true,
+        data: response.rows,
+      };
+    } else {
+      console.log(response);
+      return {
+        status: false,
+        message: "The contribution not found",
+      };
+    }
+  }
+
 };
 
 export default contributorsModel;
