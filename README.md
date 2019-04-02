@@ -26,7 +26,7 @@
 ### User Endpoints
 
 |HTTP Method| Endpoint| Activity|
-|-----------|:---------:|:---------:|
+|-----------|:---------|:---------|
 |POST|/api/v1/auth/signup|Create user|
 |POST|/api/v1/auth/login| Sign in|
 |GET|/api/v1/users|View users|
@@ -42,8 +42,8 @@
 |GET|/api/v1/condtributions|View own contributions|
 |PUT|/api/v1/contributions/:id/pay|Pay a contributer|
 |PUT|/api/v1/loans/pay|Pay loan|
-|DELETE|/api/v1/loans/:id|Cancel the loan request|
-|PUT|/api/v1/loans/:id|Update request|
+|DELETE|/api/v1/loans|Cancel the loan request|
+|PUT|/api/v1/loans/|Update request|
 |POST|/api/v1/loans|Create request|
 |DELETE|/api/v1/users/:id|Delete user|
 
