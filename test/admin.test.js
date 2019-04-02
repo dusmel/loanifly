@@ -8,9 +8,9 @@ const testAdmin = (tokens, credentials) => {
         .post('/api/v1/auth/signin')
         .send({
           email: credentials.email,
-          password: credentials.password,
+          password: credentials.password
         })
-        .then((res) => {
+        .then(res => {
           expect(res.body.status).toBe(200);
         });
     });

@@ -2,24 +2,26 @@ import pg from 'pg';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const dbUrl = process.env.NODE_ENV === 'test'
-  ? process.env.TEST_DATABASE
-  : process.env.DATABASE_URL;
+const dbUrl =
+  process.env.NODE_ENV === 'test'
+    ? process.env.TEST_DATABASE
+    : process.env.DATABASE_URL;
 
 class DB {
   constructor(url = dbUrl) {
     this.pool = new pg.Pool({ connectionString: url });
+    this.url = url;
   }
 
   async runQuery(query, params = []) {
     try {
       const response = await this.pool.query(query, params);
       return {
-        response,
+        response
       };
     } catch (e) {
       return {
-        error: e,
+        error: e
       };
     }
   }
@@ -39,7 +41,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e,
+        res: e
       };
     }
   }
@@ -61,7 +63,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e,
+        res: e
       };
     }
   }
@@ -82,7 +84,7 @@ class DB {
     } catch (e) {
       return {
         status: 500,
-        res: e,
+        res: e
       };
     }
   }

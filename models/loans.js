@@ -51,6 +51,21 @@ const loansModel = {
       message: 'no loan found',
     };
   },
+
+  async viewTotalPaidAmount(){
+    const {response} = await db.runQuery(queries.getPaidAmount);
+    if(response.rowCount > 0){
+      return {
+        status: true,
+        data: response.rows,
+      }
+    } else{
+      return {
+        status: false,
+        message: 'no amount found',
+      }
+    }
+  },
 };
 
 export default loansModel;

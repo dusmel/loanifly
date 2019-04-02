@@ -1,5 +1,5 @@
-import DB from "./index";
-import queries from "./queries/contributors";
+import DB from './index';
+import queries from './queries/contributors';
 
 const db = new DB();
 
@@ -9,6 +9,7 @@ const contributorsModel = {
     const { id } = user;
     try {
       const { response } = await db.runQuery(queries.contribute, [amount, id]);
+
       return {
         status: true,
         data: response
@@ -56,13 +57,13 @@ const contributorsModel = {
       if (contribution.response.rows.length === 0) {
         return {
           status: false,
-          message: "the contribution does not exist..."
+          message: 'the contribution does not exist...'
         };
       }
       if (contribution.response.rows[0].status !== 0) {
         return {
           status: false,
-          message: "The contribution has already been paid ..."
+          message: 'The contribution has already been paid ...'
         };
       }
       const { response } = await db.runQuery(queries.payContribution, [
@@ -81,22 +82,37 @@ const contributorsModel = {
       };
     }
   },
-  
-  async viewAllContributions(){
-    const {response} = await db.runQuery(queries.getAllContributions);
-    if(response.rowCount > 0){
+
+  async viewAllContributions() {
+    const { response } = await db.runQuery(queries.getAllContributions);
+    if (response.rowCount > 0) {
       return {
         status: true,
-        data: response.rows,
-      }
-    } else{
+        data: response.rows
+      };
+    } else {
       return {
         status: false,
-        message: 'no contribution found',
-      }
+        message: 'no contribution found'
+      };
     }
   },
 
+  async viewContribution(id) {
+    const { response } = await db.runQuery(queries.getContrubutionById, [id]);
+    if (response.rowCount > 0) {
+      return {
+        status: true,
+        data: response.rows
+      };
+    } else {
+      console.log(response);
+      return {
+        status: false,
+        message: 'The contribution not found'
+      };
+    }
+  }
 };
 
 export default contributorsModel;

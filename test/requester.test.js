@@ -26,7 +26,6 @@ const testRequester = (tokens, credentials) => {
           amount: 2000,
         })
         .then((res) => {
-          loanId = res.body.data[0].id;
           expect(res.body.status).toBe(200);
         });
     });
