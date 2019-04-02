@@ -22,7 +22,7 @@ const loansModel = {
       }
       const { response } = await db.runQuery(queries.grant, [
         status,
-        (status === 1) ? new Date() : null,
+        status === 1 ? new Date() : null,
         id,
       ]);
 
@@ -38,19 +38,18 @@ const loansModel = {
     }
   },
 
-  async viewLoans(){
-    const {response} = await db.runQuery(queries.getLoans);
-    if(response.rowCount > 0){
+  async viewLoans() {
+    const { response } = await db.runQuery(queries.getLoans);
+    if (response.rowCount > 0) {
       return {
         status: true,
         data: response.rows,
-      }
-    } else{
-      return {
-        status: true,
-        message: 'no loan found',
-      }
+      };
     }
+    return {
+      status: true,
+      message: 'no loan found',
+    };
   },
 };
 

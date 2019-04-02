@@ -71,6 +71,7 @@ router.delete(
   userController.deleteUser,
 );
 
+// for the admin
 router.get(
   '/api/v1/loans',
   authorization.authorizeAdmin,
@@ -80,7 +81,7 @@ router.get(
 router.get(
   '/api/v1/contributions',
   authorization.authorizeAdmin,
-  contributorController.viewAllContributions
+  contributorController.viewAllContributions,
 );
 
 // Contributors routes
@@ -121,11 +122,12 @@ router.post(
 // Requester routes (GET)
 router.get(
   '/api/v1/loans/:id',
-  authorization.authorizeAdminAndRequester,
+  authorization.authorizeRequester,
   requestersValidations.getOne,
   requesterController.getSingleRequest,
 );
 
+// Requester routes (PUT)
 router.put(
   '/api/v1/loans',
   authorization.authorizeRequester,

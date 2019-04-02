@@ -1,4 +1,4 @@
-import Joi from "joi";
+import Joi from 'joi';
 
 const RequesterValidation = {
   /**
@@ -13,13 +13,13 @@ const RequesterValidation = {
       amount: Joi.number()
         .min(100)
         .max(1000000)
-        .required()
+        .required(),
     };
     const result = Joi.validate(req.body, schema);
     if (result.error) {
       return res.status(400).json({
         status: 400,
-        message: result.error.details[0].message.replace(/[^a-zA-Z0-9 ]/g, "")
+        message: result.error.details[0].message.replace(/[^a-zA-Z0-9 ]/g, ''),
       });
     }
     next();
@@ -36,14 +36,14 @@ const RequesterValidation = {
    */
   getOne(req, res, next) {
     const schema = {
-      id: Joi.number().required()
+      id: Joi.number().required(),
     };
     const result = Joi.validate(req.params, schema);
 
     if (result.error) {
       return res.status(400).json({
         status: 400,
-        message: result.error.details[0].message.replace(/[^a-zA-Z0-9 ]/g, "")
+        message: result.error.details[0].message.replace(/[^a-zA-Z0-9 ]/g, ''),
       });
     }
     next();
@@ -58,17 +58,17 @@ const RequesterValidation = {
    */
   validateUpdateLoan(req, res, next) {
     const schema = {
-      amount: Joi.number().required()
+      amount: Joi.number().required(),
     };
     const result = Joi.validate(req.body, schema);
 
     if (result.error) {
       return res.status(400).json({
         status: 400,
-        message: result.error.details[0].message.replace(/[^a-zA-Z0-9 ]/g, "")
+        message: result.error.details[0].message.replace(/[^a-zA-Z0-9 ]/g, ''),
       });
     }
     next();
-  }
+  },
 };
 export default RequesterValidation;
