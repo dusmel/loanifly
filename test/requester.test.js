@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../app';
 
-let loanId;
+const loanId = 1;
 const testRequester = (tokens, credentials) => {
   describe('Should login the requester', () => {
     test('signin', async () => {
@@ -60,6 +60,7 @@ const testRequester = (tokens, credentials) => {
         .get(`/api/v1/loans/${loanId}`)
         .set('Authorization', tokens.requester)
         .then((res) => {
+          console.log('res.body :', loanId, typeof loanId);
           expect(res.body.status).toBe(200);
         });
     });
