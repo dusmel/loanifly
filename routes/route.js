@@ -74,7 +74,7 @@ router.get(
 );
 
 router.put(
-  '/api/v1/contributions/:id/pay',
+  '/api/v1/contributions/pay/:id',
   authorization.authorizeAdmin,
   loansValidations.validateParams,
   contributorController.payContribution,

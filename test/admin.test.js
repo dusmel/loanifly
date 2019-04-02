@@ -3,6 +3,7 @@ import app from '../app';
 
 let userId = 1;
 const idLoan = 2;
+let contribId = 1;
 
 const testAdmin = (tokens, credentials) => {
   describe('Should login the admin', () => {
@@ -253,6 +254,74 @@ const testAdmin = (tokens, credentials) => {
     test('missing tokens', async () => {
       await request(app)
         .get('/api/v1/contributions/admin')
+        .then((res) => {
+          expect(res.body.error).toBe('Authorization missing');
+        });
+    });
+  });
+
+  describe('Should get a single contribution', () => {
+    test('Contribute', async () => {
+      await request(app)
+        .post('/api/v1/contributions')
+        .set('Authorization', tokens.contributor)
+        .send({ amount: 45 })
+        .then((res) => {
+          contribId = res.body.data[0].id;
+          expect(res.body.status).toBe(200);
+          expect(res.body.data instanceof Array).toBe(true);
+        });
+    });
+
+    test('get one', async () => {
+      await request(app)
+        .get(`/api/v1/contributions/${contribId}`)
+        .set('Authorization', tokens.admin)
+        .then((res) => {
+          expect(res.body.status).toBe(200);
+        });
+    });
+
+    test('with invalid tokens', async () => {
+      await request(app)
+        .get(`/api/v1/contributions/${contribId}`)
+        .set('Authorization', tokens.requester)
+        .then((res) => {
+          expect(res.body.error).toBe('Non-authorised user');
+        });
+    });
+
+    test('missing tokens', async () => {
+      await request(app)
+        .get(`/api/v1/contributions/${contribId}`)
+        .then((res) => {
+          expect(res.body.error).toBe('Authorization missing');
+        });
+    });
+  });
+
+  describe('Should get total amount for paid loans', () => {
+    test('get total amount', async () => {
+      await request(app)
+        .get('/api/v1/loans/paid')
+        .set('Authorization', tokens.admin)
+        .then((res) => {
+          expect(res.body.status).toBe(200);
+        });
+    });
+
+    test('with invalid tokens', async () => {
+      await request(app)
+        .get('/api/v1/loans/paid')
+        .set('Authorization', tokens.requester)
+        .then((res) => {
+          expect(res.body.error).toBe('Non-authorised user');
+        });
+    });
+
+    test('missing tokens', async () => {
+      await request(app)
+        .get('/api/v1/loans/paid')
         .then((res) => {
           expect(res.body.error).toBe('Authorization missing');
         });
