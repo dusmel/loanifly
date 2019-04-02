@@ -1,6 +1,6 @@
 # loanifly
 [![Build Status](https://travis-ci.org/dusmel/loanifly.svg?branch=develop)](https://travis-ci.org/dusmel/loanifly)
-[![Coverage Status](https://coveralls.io/repos/github/dusmel/loanifly/badge.svg?branch=develop)](https://coveralls.io/github/dusmel/loanifly?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/dusmel/loanifly/badge.png?branch=develop)](https://coveralls.io/github/dusmel/loanifly?branch=develop)
 
 ## Getting Started
 -------------------
