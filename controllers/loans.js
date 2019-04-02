@@ -17,35 +17,34 @@ const loansController = {
       data: response.data,
     });
   },
-  async viewLoans(req, res){
+  async viewLoans(req, res) {
     const loans = await loansModel.viewLoans();
     if (!loans.status) {
       return res.status(400).json({
         status: 400,
-        message: loans.message,
+        message: loans.message
       });
-    } else{
+    } 
       return res.status(200).json({
         status: 200,
-        loans: loans.data,
+        loans: loans.data
       });
-    }
+    
   },
 
-  async viewTotalPaidAmount(req, res){
+  async viewTotalPaidAmount(req, res) {
     const amount = await loansModel.viewTotalPaidAmount();
     if (!amount.status) {
       return res.status(400).json({
         status: 400,
-        message: amount.message,
+        message: amount.message
       });
-    } else{
+    } 
       return res.status(200).json({
         status: 200,
-        amount: amount.data,
+        amount: amount.data
       });
-    }
+    
   },
-
 };
 export default loansController;

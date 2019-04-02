@@ -12,28 +12,28 @@ const contributorsModel = {
 
       return {
         status: true,
-        data: response
+        data: response,
       };
     } catch (e) {
       return {
         status: false,
-        message: e
+        message: e,
       };
     }
   },
   async viewContributions(user) {
     try {
       const { response } = await db.runQuery(queries.getContrubutions, [
-        user.id
+        user.id,
       ]);
       return {
         status: true,
-        data: response
+        data: response,
       };
     } catch (e) {
       return {
         status: false,
-        message: e
+        message: e,
       };
     }
   },
@@ -42,12 +42,12 @@ const contributorsModel = {
       const { response } = await db.runQuery(queries.getLoans);
       return {
         status: true,
-        data: response
+        data: response,
       };
     } catch (e) {
       return {
         status: false,
-        message: e
+        message: e,
       };
     }
   },
@@ -57,28 +57,28 @@ const contributorsModel = {
       if (contribution.response.rows.length === 0) {
         return {
           status: false,
-          message: 'the contribution does not exist...'
+          message: 'the contribution does not exist...',
         };
       }
       if (contribution.response.rows[0].status !== 0) {
         return {
           status: false,
-          message: 'The contribution has already been paid ...'
+          message: 'The contribution has already been paid ...',
         };
       }
       const { response } = await db.runQuery(queries.payContribution, [
         new Date(),
-        id
+        id,
       ]);
 
       return {
         status: true,
-        data: response.rows
+        data: response.rows,
       };
     } catch (error) {
       return {
         status: false,
-        message: error
+        message: error,
       };
     }
   },
@@ -90,12 +90,12 @@ const contributorsModel = {
         status: true,
         data: response.rows
       };
-    } else {
+    } 
       return {
         status: false,
         message: 'no contribution found'
       };
-    }
+    
   },
 
   async viewContribution(id) {
@@ -105,14 +105,14 @@ const contributorsModel = {
         status: true,
         data: response.rows
       };
-    } else {
+    } 
       console.log(response);
       return {
         status: false,
         message: 'The contribution not found'
       };
-    }
-  }
+    
+  },
 };
 
 export default contributorsModel;

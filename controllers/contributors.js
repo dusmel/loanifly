@@ -6,13 +6,13 @@ const contributorController = {
     if (!response.status) {
       return res.status(500).json({
         status: 500,
-        message: response.message
+        message: response.message,
       });
     }
 
     return res.status(200).json({
       status: 200,
-      data: response.data.rows
+      data: response.data.rows,
     });
   },
   async viewContributions(req, res) {
@@ -20,13 +20,13 @@ const contributorController = {
     if (!response.status) {
       return res.status(500).json({
         status: 500,
-        message: response.message
+        message: response.message,
       });
     }
 
     return res.status(200).json({
       status: 200,
-      data: response.data.rows
+      data: response.data.rows,
     });
   },
   async viewTotalContributions(req, res) {
@@ -34,12 +34,12 @@ const contributorController = {
 
     const contributions = response.data.rows;
     let total = 0;
-    contributions.map(data => {
+    contributions.map((data) => {
       total += data.amount;
     });
     return res.status(200).json({
       status: 200,
-      data: [{ total }]
+      data: [{ total }],
     });
   },
   async payContribution(req, res) {
@@ -47,25 +47,25 @@ const contributorController = {
     if (!response.status) {
       return res.status(500).json({
         status: 500,
-        message: response.message
+        message: response.message,
       });
     }
     return res.status(200).json({
       status: 200,
-      data: response.data
+      data: response.data,
     });
   },
   async viewLoans(req, res) {
     const response = await contributorsModel.viewLoans();
     const loans = response.data.rows;
     let total = 0;
-    loans.map(loan => {
+    loans.map((loan) => {
       total += loan.amount;
     });
 
     return res.status(200).json({
       status: 200,
-      data: [{ total }]
+      data: [{ total }],
     });
   },
 
@@ -76,12 +76,12 @@ const contributorController = {
         status: 400,
         message: contributions.message
       });
-    } else {
+    } 
       return res.status(200).json({
         status: 200,
         data: contributions
       });
-    }
+    
   },
 
   async viewContribution(req, res) {
@@ -93,13 +93,13 @@ const contributorController = {
         status: 400,
         message: contribution.message
       });
-    } else {
+    } 
       return res.status(200).json({
         status: 200,
         data: contribution
       });
-    }
-  }
+    
+  },
 };
 
 export default contributorController;
