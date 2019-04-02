@@ -9,7 +9,7 @@ const testContributor = (tokens, credentials) => {
           .post('/api/v1/contributions')
           .set('Authorization', tokens.contributor)
           .send({ amount: 45 })
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(200);
             expect(res.body.data instanceof Array).toBe(true);
           });
@@ -19,7 +19,7 @@ const testContributor = (tokens, credentials) => {
         await request(app)
           .post('/api/v1/contributions')
           .set('Authorization', tokens.contributor)
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(400);
             expect(res.body.message).toBe('amount is required');
           });
@@ -28,9 +28,9 @@ const testContributor = (tokens, credentials) => {
       test('Wrong token', async () => {
         await request(app)
           .post('/api/v1/contributions')
-          .set('Authorization', `token`)
+          .set('Authorization', 'token')
           .send({ amount: 100 })
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authentification failed.');
           });
@@ -40,7 +40,7 @@ const testContributor = (tokens, credentials) => {
         await request(app)
           .post('/api/v1/contributions')
           .send({ amount: 100 })
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authorization missing');
           });
@@ -52,7 +52,7 @@ const testContributor = (tokens, credentials) => {
         await request(app)
           .get('/api/v1/contributions')
           .set('Authorization', tokens.contributor)
-          .then(res => {
+          .then((res) => {
             console.log(res.body);
             expect(res.body.status).toBe(200);
             expect(res.body.data instanceof Array).toBe(true);
@@ -62,7 +62,7 @@ const testContributor = (tokens, credentials) => {
       test('Missing Authorization Header', async () => {
         await request(app)
           .get('/api/v1/contributions')
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authorization missing');
           });
@@ -71,8 +71,8 @@ const testContributor = (tokens, credentials) => {
       test('Wrong token', async () => {
         await request(app)
           .get('/api/v1/contributions')
-          .set('Authorization', `token`)
-          .then(res => {
+          .set('Authorization', 'token')
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authentification failed.');
           });
@@ -81,7 +81,7 @@ const testContributor = (tokens, credentials) => {
       test('Missing token', async () => {
         await request(app)
           .get('/api/v1/contributions')
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authorization missing');
           });
@@ -93,7 +93,7 @@ const testContributor = (tokens, credentials) => {
         await request(app)
           .get('/api/v1/contributions/total')
           .set('Authorization', tokens.contributor)
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(200);
             expect(res.body.data instanceof Array).toBe(true);
           });
@@ -102,7 +102,7 @@ const testContributor = (tokens, credentials) => {
       test('Missing Authorization Header', async () => {
         await request(app)
           .get('/api/v1/contributions/total')
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authorization missing');
           });
@@ -111,8 +111,8 @@ const testContributor = (tokens, credentials) => {
       test('Wrong token', async () => {
         await request(app)
           .get('/api/v1/contributions/total')
-          .set('Authorization', `token`)
-          .then(res => {
+          .set('Authorization', 'token')
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authentification failed.');
           });
@@ -124,7 +124,7 @@ const testContributor = (tokens, credentials) => {
         await request(app)
           .get('/api/v1/loans/total')
           .set('Authorization', tokens.contributor)
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(200);
             expect(res.body.data instanceof Array).toBe(true);
           });
@@ -133,7 +133,7 @@ const testContributor = (tokens, credentials) => {
       test('Missing Authorization Header', async () => {
         await request(app)
           .get('/api/v1/loans/total')
-          .then(res => {
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authorization missing');
           });
@@ -142,8 +142,8 @@ const testContributor = (tokens, credentials) => {
       test('Wrong token', async () => {
         await request(app)
           .get('/api/v1/loans/total')
-          .set('Authorization', `token`)
-          .then(res => {
+          .set('Authorization', 'token')
+          .then((res) => {
             expect(res.body.status).toBe(403);
             expect(res.body.error).toBe('Authentification failed.');
           });

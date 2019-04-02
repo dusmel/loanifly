@@ -49,7 +49,7 @@ const testRequester = (tokens, credentials) => {
       });
   });
 
-  describe('Should place loan requester', () => {
+  describe('Should place loan request', () => {
     test('loan request', async () => {
       await request(app)
         .post('/api/v1/loans')
@@ -92,7 +92,6 @@ const testRequester = (tokens, credentials) => {
         .get(`/api/v1/loans/${loanId}`)
         .set('Authorization', tokens.requester)
         .then((res) => {
-          console.log('res.body :', loanId, typeof loanId);
           expect(res.body.status).toBe(200);
         });
     });
