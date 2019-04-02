@@ -29,7 +29,7 @@ const authorizeAdmin = (req, res, next) => {
   }
   return res.status(403).json({
     status: 403,
-    error: 'Non-authorised user'
+    error: 'Non-authorised user .A'
   });
 };
 

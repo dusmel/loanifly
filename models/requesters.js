@@ -56,7 +56,7 @@ const requesterModel = {
       const loan = await db.runQuery(queries.getOne, [loanId, requesterId]);
       return {
         status: true,
-        data: loan.response.rows[0],
+        data: loan.response.rows,
       };
     } catch (e) {
       return {
@@ -104,13 +104,18 @@ const requesterModel = {
    */
   async updateLoan(amount, id) {
     try {
-      const loan = await db.runQuery(queries.updateLoan, [amount, id]);
-      if (loan.rowCount === 0) {
+      const noLoan = await db.runQuery(queries.getPending, [id]);
+
+      if (noLoan.response.rowCount === 0) {
         return {
           status: false,
+          notFound: true,
           message: 'The user does not have any pending loan',
         };
       }
+
+      const loan = await db.runQuery(queries.updateLoan, [amount, id]);
+
       return {
         status: true,
         data: loan.response.rows,
